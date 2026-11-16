@@ -55,6 +55,20 @@ h3.sub{font-size:14px;margin:16px 0 2px;font-weight:600}
 .colrow{display:flex;flex-wrap:wrap;gap:8px 14px;margin:6px 0 10px}.colrow label{display:flex;align-items:center;gap:6px;font-size:13px}.colrow input[type=color]{width:34px;height:26px;padding:0;border:1px solid var(--line);border-radius:6px;background:transparent}
 .langsw{display:flex;gap:4px;margin:0 0 8px}.langsw button{flex:1;height:28px;border:1px solid var(--line);border-radius:7px;background:transparent;color:var(--muted);font:inherit;font-size:12px;cursor:pointer}.langsw button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink,#fff);font-weight:600}
 #edSvg.meastool{cursor:crosshair}
+.langtop{display:none}
+.langsw .ls{display:none}
+@media (max-width:1100px){
+  .brand{padding:10px 6px 8px}
+  .brand .langsw{flex-direction:column;gap:6px;margin:0 0 8px}
+  .brand .langsw button{height:38px;font-size:14px;font-weight:700}
+  .brand .langsw .lf{display:none}
+  .brand .langsw .ls{display:inline}
+}
+@media (max-width:760px){
+  .shell>.langtop{display:flex;order:-3;position:sticky;top:0;z-index:60;margin:0;gap:8px;align-items:center;padding:calc(6px + env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-right,0px)) 6px max(10px,env(safe-area-inset-left,0px));background:var(--panel);border-bottom:1px solid var(--line)}
+  .langtop .globe{font-size:22px;flex:none}
+  .langtop button{height:44px;font-size:16px;font-weight:600;border-radius:10px}
+}
 </style></head><body>
 <title>Γράμματα 3D: φωτιζόμενα γράμματα για εκτύπωση 3D</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -163,8 +177,9 @@ td.lab{font-family:var(--font-head);font-weight:700;font-size:18px}
 </style>
 
 <div class="shell">
+  <div class="langsw langtop" role="group" aria-label="Language"><span class="globe" aria-hidden="true">🌐</span><button type="button" data-lang="el">Ελληνικά</button><button type="button" data-lang="en">English</button></div>
   <nav class="rail" aria-label="Μενού">
-    <div class="brand"><div class="langsw" role="group" aria-label="Language"><button type="button" data-lang="el">Ελληνικά</button><button type="button" data-lang="en">English</button></div><h1>Γράμματα 3D</h1><p>Φωτιζόμενα γράμματα για εκτύπωση 3D. Οι ρυθμίσεις αποθηκεύονται αυτόματα σε αυτόν τον browser.</p></div>
+    <div class="brand"><div class="langsw" role="group" aria-label="Language"><button type="button" data-lang="el"><span class="lf">Ελληνικά</span><span class="ls">EL</span></button><button type="button" data-lang="en"><span class="lf">English</span><span class="ls">EN</span></button></div><h1>Γράμματα 3D</h1><p>Φωτιζόμενα γράμματα για εκτύπωση 3D. Οι ρυθμίσεις αποθηκεύονται αυτόματα σε αυτόν τον browser.</p></div>
     <div class="navlist">
 <button type="button" class="navb" data-pane="src"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 10 5h2l5 14M7.5 14h7M19 5v14"/></svg><span><b>Πηγή</b><small>Κείμενο ή αρχείο SVG</small></span></button>
 <button type="button" class="navb" data-pane="shape"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M7 18V6h4a3 3 0 0 1 0 6H7"/></svg><span><b>Μορφή γραμμάτων</b><small>Πάχος και πλάτος</small></span></button>
@@ -3915,7 +3930,7 @@ rebuild();
     return (LET.test(g[0]) ? '(?<![\\p{L}])' : '') + esc(g) + (LET.test(g[g.length - 1]) ? '(?![\\p{L}])' : '');
   }).join('|'), 'gu');
   var lang = 'el';
-  try { lang = localStorage.getItem('grammata3d-lang') === 'en' ? 'en' : 'el'; } catch (e) {}
+  try { var sv = localStorage.getItem('grammata3d-lang'); lang = (sv === 'en' || sv === 'el') ? sv : (/^el/i.test(navigator.language || '') ? 'el' : 'en'); } catch (e) {}
   function tr(t){ return (lang === 'en' && typeof t === 'string' && GR.test(t)) ? t.replace(RE, function(m){ var v = MAP.get(m); return v === undefined ? m : v; }) : t; }
   window.__tr = tr;
   var _confirm = window.confirm.bind(window), _alert = window.alert.bind(window);
@@ -3959,9 +3974,9 @@ rebuild();
     arecs.forEach(function(m, el){ for (var a in m){ if (el.getAttribute(a) === m[a].out) el.setAttribute(a, m[a].src); } });
     arecs.clear();
   }
-  function setLang(l){
+  function setLang(l, noSave){
     lang = l === 'en' ? 'en' : 'el';
-    try { localStorage.setItem('grammata3d-lang', lang); } catch (e) {}
+    if (!noSave){ try { localStorage.setItem('grammata3d-lang', lang); } catch (e) {} }
     document.documentElement.lang = lang;
     obs.disconnect();
     if (lang === 'en') walk(document.documentElement); else restore();
@@ -3969,6 +3984,6 @@ rebuild();
     document.querySelectorAll('.langsw button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
   }
   document.querySelectorAll('.langsw button').forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.lang); }); });
-  setLang(lang);
+  setLang(lang, true);
 })();
 </script>
