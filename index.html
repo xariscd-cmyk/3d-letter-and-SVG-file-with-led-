@@ -55,6 +55,42 @@ h3.sub{font-size:14px;margin:16px 0 2px;font-weight:600}
 .colrow{display:flex;flex-wrap:wrap;gap:8px 14px;margin:6px 0 10px}.colrow label{display:flex;align-items:center;gap:6px;font-size:13px}.colrow input[type=color]{width:34px;height:26px;padding:0;border:1px solid var(--line);border-radius:6px;background:transparent}
 .langsw{display:flex;gap:4px;margin:0 0 8px}.langsw button{flex:1;height:28px;border:1px solid var(--line);border-radius:7px;background:transparent;color:var(--muted);font:inherit;font-size:12px;cursor:pointer}.langsw button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink,#fff);font-weight:600}
 #edSvg.meastool{cursor:crosshair}
+.diagram{margin:0 0 14px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.diagram svg{width:100%;height:auto;display:block}
+.diagram .hint{margin:8px 0 0}
+.tabs button{display:flex;flex-direction:column;align-items:center;gap:4px}
+.tabs button svg{width:44px;height:26px;display:block}
+details.sbox{margin:0 0 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+details.sbox>summary{cursor:pointer;padding:12px 14px;font-weight:700;font-size:14px}
+details.sbox[open]>summary{border-bottom:1px solid var(--line)}
+details.sbox>:not(summary){margin-left:14px;margin-right:14px}
+details.sbox>:last-child{margin-bottom:14px}
+details.sbox>summary+*{margin-top:12px}
+@media (max-width:1100px){
+  .navb{flex-direction:column;gap:3px;padding:8px 2px;height:auto}
+  .navb span{display:flex;flex-direction:column;align-items:center}
+  .navb small{display:none}
+  .navb b{font-size:10px;font-weight:600;text-align:center;line-height:1.15;max-width:60px;overflow-wrap:anywhere}
+}
+@media (max-width:760px){
+  .navb{min-width:70px}
+  .navb b{max-width:68px}
+}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+.cardopt{display:flex;flex-direction:column;gap:4px;text-align:left;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--field);color:var(--ink);cursor:pointer;font:inherit;min-height:116px}
+.cardopt svg{width:100%;height:50px;display:block}
+.cardopt b{font-size:13px;line-height:1.2}
+.cardopt span{font-size:11.5px;color:var(--muted);line-height:1.25}
+.cardopt[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.cardopt:focus-visible,.qm:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.qm{margin-left:6px;width:20px;height:20px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);background:transparent;font:700 12px/1 inherit;padding:0;cursor:pointer;vertical-align:middle}
+.qtip{grid-column:1/-1;margin:0 0 10px;padding:8px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.printbox{margin:0 0 12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.printbox h4{margin:0 0 8px;font-size:13px}
+.printbox ul{margin:0 0 6px;padding:0;list-style:none;display:grid;gap:8px}
+.printbox li{display:flex;gap:10px;align-items:center;font-size:12.5px}
+.printbox li svg{flex:none;width:34px;height:26px}
+.printbox small{color:var(--muted);font-size:11.5px}
 .langtop{display:none}
 .langsw .ls{display:none}
 @media (max-width:1100px){
@@ -356,6 +392,7 @@ td.lab{font-family:var(--font-head);font-weight:700;font-size:18px}
         <div class="field"><label for="ledH">Πάχος ταινίας</label><div class="unit"><input type="number" id="ledH" value="3.5" step="0.5" min="1.5"><i>mm</i></div></div>
         <div class="field"><label for="ledGap">Απόσταση στηρίξεων</label><div class="unit"><input type="number" id="ledGap" value="40" step="5" min="15"><i>mm</i></div></div>
         <div class="field"><label for="ledL">Μήκος στήριξης</label><div class="unit"><input type="number" id="ledL" value="14" step="1" min="6"><i>mm</i></div></div>
+        <div class="field"><label for="ledT">Πάχος τοιχωμάτων στήριξης</label><div class="unit"><input type="number" id="ledT" value="1" step="0.1" min="0.8" max="2"><i>mm</i></div></div>
       </div>
       <p id="ledNote" class="hint"></p>
       <details class="hintd"><summary>Πληροφορίες</summary><p class="hint">Κάθε στήριξη είναι ένα μικρό κανάλι σχήματος U με δύο χείλη που πατάνε τις άκρες της ταινίας. Πιέζεις την ταινία μέσα και κουμπώνει. Από κάτω έχει δύο ελαστικά πόδια με άγκιστρο που περνούν από μια υποδοχή στην πλάκα και κλειδώνουν πίσω της. Οι στηρίξεις βγαίνουν σε δικό τους αρχείο (_stirixeis_led) και τυπώνονται ξαπλωμένες στο πλάι, ώστε οι στρώσεις να τρέχουν κατά μήκος των ποδιών και να είναι πιο γερές. Με «Κόλλα» οι στηρίξεις δεν έχουν πόδια και δεν ανοίγουν καθόλου τρύπες στην πλάκα, άρα η στεγανότητα μένει ανέγγιχτη. Κολλιούνται πάνω στην πλάκα και βγαίνουν σε ξεχωριστό αρχείο (_stirixeis_led_kolla). Μπορείς να έχεις και τους δύο τύπους μαζί: το εργαλείο «Κόλλα ⇄ Κούμπωμα» στην «Επεξεργασία σημείων» αλλάζει τον τύπο μιας συγκεκριμένης στήριξης. Ο αριθμός και οι θέσεις βγαίνουν αυτόματα πάνω στη μέση κάθε γραμμής του γράμματος. Στην «Επεξεργασία σημείων» τις μετακινείς, τις στρέφεις, προσθέτεις ή σβήνεις. Μέτρησε το πάχος της ταινίας με LED και τύπωσε πρώτα δοκιμαστικά μία.</p></details>
@@ -385,8 +422,10 @@ td.lab{font-family:var(--font-head);font-weight:700;font-size:18px}
   <div class="grid2">
     <div class="field" style="grid-column:1/-1"><label for="sg1">Πάνω γραμμή</label><input id="sg1" type="text" value="ANASTASIA - ELENI"></div>
     <div class="field"><label for="sgH1">Ύψος γραμμάτων πάνω</label><div class="unit"><input type="number" id="sgH1" value="22" step="0.5" min="1"><i>cm</i></div></div>
+    <div class="field"><label for="sgD1">Βάθος πάνω γραμμής</label><div class="unit"><input type="number" id="sgD1" step="1" min="10" placeholder="όπως στο project"><i>mm</i></div></div>
     <div class="field" style="grid-column:1/-1"><label for="sg2">Κάτω γραμμή</label><input id="sg2" type="text" value="ROOMS &amp; APARTMENTS"></div>
     <div class="field"><label for="sgH2">Ύψος γραμμάτων κάτω</label><div class="unit"><input type="number" id="sgH2" value="15" step="0.5" min="1"><i>cm</i></div></div>
+    <div class="field"><label for="sgD2">Βάθος κάτω γραμμής</label><div class="unit"><input type="number" id="sgD2" step="1" min="10" placeholder="όπως στο project"><i>mm</i></div></div>
     <div class="field"><label for="sgW">Μήκος πίνακα (άνοιγμα)</label><div class="unit"><input type="number" id="sgW" value="404" step="1" min="10"><i>cm</i></div></div>
     <div class="field"><label for="sgH">Ύψος πίνακα</label><div class="unit"><input type="number" id="sgH" value="53" step="0.5" min="5"><i>cm</i></div></div>
     <div class="field"><label for="sgRise">Ανάβαση στο κέντρο (πάνω από τις γωνίες)</label><div class="unit"><input type="number" id="sgRise" value="44" step="0.5" min="1"><i>cm</i></div></div>
@@ -400,6 +439,7 @@ td.lab{font-family:var(--font-head);font-weight:700;font-size:18px}
   <label class="check"><input type="checkbox" id="lgNoBold" checked><span>Το λογότυπο χωρίς bold (να μην ισχύει το έξτρα περίγραμμα)</span></label>
   <div class="grid2">
     <div class="field"><label for="lgH">Ύψος λογοτύπου</label><div class="unit"><input type="number" id="lgH" value="25" step="0.5" min="1"><i>cm</i></div></div>
+    <div class="field"><label for="lgD">Βάθος λογοτύπου</label><div class="unit"><input type="number" id="lgD" step="1" min="10" placeholder="όπως στο project"><i>mm</i></div></div>
     <div class="field"><label for="lgX">Θέση κέντρου από το αριστερό άκρο</label><div class="unit"><input type="number" id="lgX" value="40" step="1"><i>cm</i></div></div>
     <div class="field"><label for="lgOff">Ύψος από την κάτω άκρη</label><div class="unit"><input type="number" id="lgOff" value="5" step="0.5" min="0"><i>cm</i></div></div>
     <label class="check"><input type="checkbox" id="lgFollow" checked><span>Γέρνει με την καμπύλη</span></label>
@@ -1250,7 +1290,7 @@ function readParams(){
     recess: num('recess', 3, 6), sLW: num('sLW', 1, 3), sLT: num('sLT', 1, 2), dripOn: $('dripOn').checked, dripH: num('dripH', 2, 5), drainMode: $('drainMode').value, clipN: Math.round(num('clipN', 2, 4)), clipW: Math.min(12, num('clipW', 3, 8)),
     mountMode: $('mountMode').value, mountN: Math.round(num('mountN', 1, 2)), holeD: num('holeD', 2, 5),
     spacerLen: num('spacerLen', 3, 15), spacerOD: num('spacerOD', 8, 14), spacerSep: $('spacerSep').checked, ballD: num('ballD', 8, 10), pilotD: num('pilotD', 2, 3), discH: Math.min(4, num('discH', 1, 2)), discD: num('discD', 0, 0), pinD: Math.min(8, num('pinD', 2, 5)), pinTol: Math.min(0.4, num('pinTol', 0, 0.1)), pinIn: Math.min(8, num('pinIn', 3, 5)), wallScrewD: num('wallScrewD', 3, 4.5), ballWall: num('ballWall', 0.6, 1.2), ballGrip: num('ballGrip', 0.2, 0.5), slotH: num('slotH', 2, 8),
-    ledOn: $('ledOn').checked, cableMode: $('cableMode').value, cableD: Math.max(3, parseFloat($('cableD').value) || 6), ledW: $('ledW').value === '8' ? 8 : 10, ledH: num('ledH', 1.5, 3.5), ledGap: num('ledGap', 15, 40), ledL: num('ledL', 6, 14), ledMount: ($('faceStyle').value === 'shell' && $('ledMount').value !== 'glue') ? 'snap' : 'glue', coneOn: $('coneOn').checked, coneD: num('coneD', 4, 8),
+    ledOn: $('ledOn').checked, cableMode: $('cableMode').value, cableD: Math.max(3, parseFloat($('cableD').value) || 6), ledW: $('ledW').value === '8' ? 8 : 10, ledH: num('ledH', 1.5, 3.5), ledGap: num('ledGap', 15, 40), ledL: num('ledL', 6, 14), ledT: Math.min(2, num('ledT', 0.8, 1)), ledMount: ($('faceStyle').value === 'shell' && $('ledMount').value !== 'glue') ? 'snap' : 'glue', coneOn: $('coneOn').checked, coneD: num('coneD', 4, 8),
     bedW: num('bedW', 50, 256), bedH: num('bedH', 50, 256), white: $('svgWhite').checked
   };
   if (P.ledgeSlope){ P.ledgeT = Math.max(P.ledgeT, P.tol * 2 + P.lipT + P.ledgeW); P.sLT = Math.max(P.sLT, P.sLW); }
@@ -2151,7 +2191,7 @@ function cutWall(sh, mine, gz, zc, wallTop, shear){
 const LEDG = {gi:0.9, lg:1.3, bb:0.7, tf:1.6, tL:1.6, tR:1.3, lt:1.0, loL:0.8, loR:0.7, slot:2.35, play:0.2};
 /* προφίλ της στήριξης LED (x κατά πλάτος, y ύψος· y=0 είναι η μπροστινή όψη της πλάκας), εξωθείται κατά μήκος της ταινίας */
 function ledGeom(P, glue){
-  const G = LEDG, a = (P.ledW + 0.5) / 2, uz = G.tf + P.ledH, top = uz + G.lt, xL = -(a + G.tL), xR = a + G.tR;
+  const G = Object.assign({}, LEDG, {tf: P.ledT, tL: P.ledT, tR: P.ledT}), a = (P.ledW + 0.5) / 2, uz = G.tf + P.ledH, top = uz + G.lt, xL = -(a + G.tL), xR = a + G.tR;
   const lx = G.gi + G.lg, zb = -(P.bt + G.play), ls = P.bt + G.play + 1.6;
   const pts = glue ? [[xL, 0], [xR, 0], [xR, top], [a - G.loR, uz + 0.45], [a - G.loR, uz], [a, uz], [a, G.tf], [-a, G.tf], [-a, uz], [-a + G.loL, uz], [-a + G.loL, uz + 0.45], [xL, top]] : [
     [xL, 0], [-lx, 0], [-lx, zb], [-lx - G.bb, zb], [-lx, zb - 1.4], [-lx, -ls], [-G.gi, -ls], [-G.gi, 0.6],
@@ -2478,9 +2518,9 @@ async function rebuild(){
       if (P.depth - P.ct * csOf(P) - (P.recess + P.bt + P.sLT) < 6) throw new Error('Δεν μένει αρκετό βάθος για το κέλυφος. Αύξησε το συνολικό βάθος ή μείωσε το βάθος της πλάκας από το χείλος.');
       if (P.dripOn && P.wt < 2.4) throw new Error('Για νεροσταλάκτη το πάχος τοιχώματος πρέπει να είναι τουλάχιστον 2,4 mm.');
       if (P.dripOn && P.dripH > P.recess) throw new Error('Το ύψος του νεροσταλάκτη δεν μπορεί να είναι μεγαλύτερο από το βάθος της πλάκας από το χείλος.');
-      if (P.ledOn && P.depth - P.ct * csOf(P) - (P.recess + P.bt) < LEDG.tf + P.ledH + LEDG.lt + 2) throw new Error('Δεν χωράει η στήριξη LED με αυτό το πάχος ταινίας. Αύξησε το συνολικό βάθος ή μείωσε το βάθος της πλάκας από το χείλος.');
+      if (P.ledOn && P.depth - P.ct * csOf(P) - (P.recess + P.bt) < P.ledT + P.ledH + LEDG.lt + 2) throw new Error('Δεν χωράει η στήριξη LED με αυτό το πάχος ταινίας. Αύξησε το συνολικό βάθος ή μείωσε το βάθος της πλάκας από το χείλος.');
     }
-    if (P.ledOn && P.faceStyle !== 'shell'){ const Lx = layers(P), top = P.faceStyle === 'tray' ? Lx.plexi.z0 : P.faceStyle === 'frame' ? Lx.ledge.z0 : P.bt + Lx.wallH; if (top - P.bt < LEDG.tf + P.ledH + LEDG.lt + 1) throw new Error('Δεν χωράει η στήριξη LED με αυτό το πάχος ταινίας. Αύξησε το συνολικό βάθος.'); }
+    if (P.ledOn && P.faceStyle !== 'shell'){ const Lx = layers(P), top = P.faceStyle === 'tray' ? Lx.plexi.z0 : P.faceStyle === 'frame' ? Lx.ledge.z0 : P.bt + Lx.wallH; if (top - P.bt < P.ledT + P.ledH + LEDG.lt + 1) throw new Error('Δεν χωράει η στήριξη LED με αυτό το πάχος ταινίας. Αύξησε το συνολικό βάθος.'); }
     if (P.mountMode === 'ball'){ const G = ballG(P, P.faceStyle === 'shell'); if (G.wall < 0.8) throw new Error('Η καβίλια ' + P.pinD + ' mm δεν χωράει σε μπάλα ' + P.ballD + ' mm. Βάλε διάμετρο μπάλας τουλάχιστον ' + G.wallMinD + ' mm ή μίκρυνε την καβίλια.'); if (!G.ok) throw new Error('Για την υποδοχή μπάλα η «Απόσταση από τον τοίχο» πρέπει να είναι τουλάχιστον ' + Math.ceil(G.Dmin - (P.faceStyle === 'shell' ? P.recess : 0)) + ' mm.'); }
     if (P.faceStyle === 'tray' && (P.tdOn || P.tnOn)){
       if (P.tnOn){ const Nn = trayNest(P); if (!Nn.ok) throw new Error(P.skT - TNEST.minWall < 0.3 ? 'Για τη φωλιά στο κίτρινο το πάχος πλαϊνού πλαισίου πρέπει να είναι τουλάχιστον 1,3 mm.' : 'Δεν χωράει η φωλιά στο κίτρινο μέσα στην επικάλυψη. Αύξησε την «Επικάλυψη με το πάτωμα» (τουλάχιστον 10 mm) ή κλείσε το κουτάκι.'); }
@@ -2498,6 +2538,7 @@ async function rebuild(){
     if (state.editing) renderEditor();
     if (firstFrame || state.refit){ frame(); firstFrame = false; state.refit = false; }
     saveSoon();
+    try { uiCardsSync(); uiPrintSummary(P, model); uiLedSummary(P, model); } catch (e) {}
     setStatus('Έτοιμο · ' + model.pieces.length + (model.pieces.length === 1 ? ' κομμάτι' : ' κομμάτια'));
     $('exportBtn').disabled = $('export3mf').disabled = !state.canDownload;
   } catch (e) {
@@ -2757,22 +2798,25 @@ async function signLines(msg){
   if (!P){ msg.textContent = 'Δεν υπάρχει ακόμα project.'; return null; }
   const nv = id => parseFloat($(id).value);
   const cfg = {W:nv('sgW'), H:nv('sgH'), rise:nv('sgRise'), floor:nv('sgFloor') || 0, mb:nv('sgM') || 0, gap:nv('sgGap') || 0, mr:(P.mountMode === 'ball' ? P.wallScrewD : P.holeD) / 2};
-  const specs = [{t:$('sg1').value.trim(), h:nv('sgH1')}, {t:$('sg2').value.trim(), h:nv('sgH2')}].filter(x => x.t && x.h > 0);
+  const dv = id => { const v = parseFloat($(id).value); return v > 0 ? v : 0; };
+  const specs = [{t:$('sg1').value.trim(), h:nv('sgH1'), d:dv('sgD1')}, {t:$('sg2').value.trim(), h:nv('sgH2'), d:dv('sgD2')}].filter(x => x.t && x.h > 0);
+  const dBad = specs.map(x => x.d || P.depth).concat($('lgOn') && $('lgOn').checked && state.logoFile ? [dv('lgD') || P.depth] : []).find(d => d - P.bt - P.ct * csOf(P) < 2);
+  if (dBad !== undefined){ msg.textContent = 'Το βάθος ' + dBad + ' mm είναι πολύ μικρό για τα πάχη που έχεις ορίσει. Αύξησέ το ή μίκρυνε βάση και καπάκι.'; return null; }
   if (!(cfg.W > 0 && cfg.H > 0 && cfg.rise > 0) || !specs.length){ msg.textContent = 'Συμπλήρωσε μήκος, ύψος, ανάβαση και ένα τουλάχιστον κείμενο με ύψος.'; return null; }
   const lines = []; let off = cfg.mb * 10;
   for (let i = specs.length - 1; i >= 0; i--){
-    const m = await computeModel(Object.assign({}, P, {mode:'text', text: specs[i].t.slice(0, 24), height: specs[i].h * 10, __layout: true}));
-    lines[i] = {pieces: m.pieces, h: specs[i].h * 10, off};
+    const m = await computeModel(Object.assign({}, P, {mode:'text', text: specs[i].t.slice(0, 24), height: specs[i].h * 10, depth: specs[i].d || P.depth, __layout: true}));
+    lines[i] = {pieces: m.pieces, h: specs[i].h * 10, d: specs[i].d || P.depth, off};
     off += specs[i].h * 10 + cfg.gap * 10;
   }
   const topEdge = off - cfg.gap * 10 + cfg.mb * 10;
   if ($('lgOn') && $('lgOn').checked && state.logoFile){
     const lgH = nv('lgH') * 10, lgOff = (nv('lgOff') || 0) * 10, lgX = nv('lgX') * 10;
     if (lgH > 0 && isFinite(lgX)){
-      const m = await computeModel(Object.assign({}, P, {mode:'svg', height: lgH, __layout: true, __svgFile: state.logoFile, weight: ($('lgNoBold') && $('lgNoBold').checked) ? 0 : P.weight}));
+      const m = await computeModel(Object.assign({}, P, {mode:'svg', height: lgH, depth: dv('lgD') || P.depth, __layout: true, __svgFile: state.logoFile, weight: ($('lgNoBold') && $('lgNoBold').checked) ? 0 : P.weight}));
       const c = cfg.W * 10, sg = cfg.rise * 10, R = c * c / (8 * sg) + sg / 2, r = R + lgOff;
       const thp = Math.asin(Math.max(-0.99, Math.min(0.99, (lgX - c / 2) / r)));
-      lines.push({pieces: m.pieces, h: lgH, off: lgOff, rigid: true, thp, thr: $('lgFollow').checked ? thp : 0, name: 'Λογότυπο'});
+      lines.push({pieces: m.pieces, h: lgH, d: dv('lgD') || P.depth, off: lgOff, rigid: true, thp, thr: $('lgFollow').checked ? thp : 0, name: 'Λογότυπο'});
     }
   }
   return {cfg, lines, topEdge};
@@ -2811,7 +2855,9 @@ function sgEdit(which){
   if (state.mode !== 'text') setMode('text');
   $('txt').value = sgUnique(t).join('');
   $('height').value = String(Math.round(h * 10));
-  ['txt', 'height'].forEach(id => $(id).dispatchEvent(new Event('input')));
+  const dd = parseFloat($(which === 1 ? 'sgD1' : 'sgD2').value);
+  if (dd > 0) $('depth').value = String(dd);
+  ['txt', 'height', 'depth'].forEach(id => $(id).dispatchEvent(new Event('input')));
   $('sgMsg').textContent = 'Το project έχει τώρα τα γράμματα της ' + (which === 1 ? 'πάνω γραμμής' : 'κάτω γραμμής') + ' (' + sgUnique(t).join(' ') + ') στα ' + h + ' cm. Πάτα «Επεξεργασία σημείων» πάνω από την προεπισκόπηση και διόρθωσε τα σημάδια.';
 }
 /* ---------- Λογότυπο στην πινακίδα ---------- */
@@ -2843,6 +2889,8 @@ function lgEdit(){
   state.svgFile = state.logoFile; state.svgInkCache = null; state.manual = {};
   $('svgInfo').textContent = state.logoFile.name;
   $('height').value = String(Math.round(h * 10));
+  const ld = parseFloat($('lgD').value);
+  if (ld > 0){ $('depth').value = String(ld); $('depth').dispatchEvent(new Event('input')); }
   state.refit = true;
   setMode('svg');
   $('height').dispatchEvent(new Event('input'));
@@ -2860,10 +2908,10 @@ async function exportSign(){
     const collect = [], info = [], enc = new TextEncoder();
     for (let i = 0; i < r.lines.length; i++){
       const L = r.lines[i], cm = Math.round(L.h) / 10;
-      const folder = (i + 1) + (L.name ? '_logotypo' : '_grammata_' + cm + 'cm');
-      const P2 = Object.assign({}, state.P, {mode: L.name ? 'svg' : 'text', height: L.h});
+      const folder = (i + 1) + (L.name ? '_logotypo' : '_grammata_' + cm + 'cm') + '_' + L.d + 'mm';
+      const P2 = Object.assign({}, state.P, {mode: L.name ? 'svg' : 'text', height: L.h, depth: L.d});
       await exportZip(null, 'zip', {model:{pieces:L.pieces}, P:P2, prefix: folder + '/' + (i + 1) + '-', collect});
-      info.push('  ' + folder + '/   ' + L.pieces.length + ' κομμάτια, ύψος ' + cm + ' cm' + (L.name ? ' (λογότυπο)' : ''));
+      info.push('  ' + folder + '/   ' + L.pieces.length + ' κομμάτια, ύψος ' + cm + ' cm, βάθος ' + L.d + ' mm' + (L.name ? ' (λογότυπο)' : ''));
     }
     const pap = ($('sgPaper') && $('sgPaper').value) || 'A4';
     collect.push({name:'xorothetisi-1-1-' + pap + '.pdf', data: buildLayoutPdf(r.cfg, r.lines, pap).bytes});
@@ -3681,7 +3729,7 @@ $('edSvg').addEventListener('pointercancel', endDrag);
 
 /* ---------- autosave (per browser) ---------- */
 const SAVE_KEY = 'grammata3d-v1';
-const SAVE_IDS = ['kitSpare','cableMode','cableD','tlOn','tdOn','tnOn','tlD','recess','sLW','sLT','dripOn','dripH','drainMode','spacerSep','ballD','pilotD','pinD','pinTol','pinIn','discH','discD','wallScrewD','ballWall','ballGrip','slotH','clipW','coneOn','coneD','ledOn','ledMount','ledW','ledH','ledGap','ledL','roofOn','roofAngle','roofH','tilt','tiltDir','weight','wpct','txt','font','spacing','height','depth','bt','wt','ct','tol','lipOn','lipH','lipT','bedW','bedH','svgWhite','faceStyle','brow','plexiT','ledgeW','ledgeT','ledgeSlope','cBase','cWalls','cCap','cPlexi','cLed','cClip','cMark','cBoard','cWallBg','sg1','sg2','sgH1','sgH2','sgW','sgH','sgRise','sgFloor','sgM','sgGap','lgOn','lgNoBold','sgPaper','lgH','lgX','lgOff','lgFollow','smooth','skT','engageH','clipsOn','clipN','mountMode','mountN','holeD','spacerLen','spacerOD','flipCap','explode'];
+const SAVE_IDS = ['kitSpare','cableMode','cableD','tlOn','tdOn','tnOn','tlD','recess','sLW','sLT','dripOn','dripH','drainMode','spacerSep','ballD','pilotD','pinD','pinTol','pinIn','discH','discD','wallScrewD','ballWall','ballGrip','slotH','clipW','coneOn','coneD','ledOn','ledMount','ledW','ledH','ledGap','ledL','ledT','roofOn','roofAngle','roofH','tilt','tiltDir','weight','wpct','txt','font','spacing','height','depth','bt','wt','ct','tol','lipOn','lipH','lipT','bedW','bedH','svgWhite','faceStyle','brow','plexiT','ledgeW','ledgeT','ledgeSlope','cBase','cWalls','cCap','cPlexi','cLed','cClip','cMark','cBoard','cWallBg','sg1','sg2','sgH1','sgH2','sgD1','sgD2','lgD','sgW','sgH','sgRise','sgFloor','sgM','sgGap','lgOn','lgNoBold','sgPaper','lgH','lgX','lgOff','lgFollow','smooth','skT','engageH','clipsOn','clipN','mountMode','mountN','holeD','spacerLen','spacerOD','flipCap','explode'];
 let saveTimer = 0;
 function snapshot(){
   const d = {v:1, mode:state.mode, manual:state.manual, charSets:state.charSets, f:{}};
@@ -3799,7 +3847,7 @@ function setMode(m){
 }
 $('tabText').onclick = () => setMode('text');
 $('tabSvg').onclick = () => setMode('svg');
-['cableMode','cableD','tlOn','tdOn','tnOn','tlD','recess','sLW','sLT','dripOn','dripH','drainMode','spacerSep','ballD','pilotD','pinD','pinTol','pinIn','discH','discD','wallScrewD','ballWall','ballGrip','slotH','clipW','coneOn','coneD','ledOn','ledMount','ledW','ledH','ledGap','ledL','roofOn','roofAngle','roofH','tilt','tiltDir','weight','wpct','txt','font','spacing','height','depth','bt','wt','ct','tol','lipOn','lipH','lipT','bedW','bedH','svgWhite','faceStyle','brow','plexiT','ledgeW','ledgeT','ledgeSlope','smooth','skT','engageH','clipsOn','clipN','mountMode','mountN','holeD','spacerLen','spacerOD'].forEach(id => {
+['cableMode','cableD','tlOn','tdOn','tnOn','tlD','recess','sLW','sLT','dripOn','dripH','drainMode','spacerSep','ballD','pilotD','pinD','pinTol','pinIn','discH','discD','wallScrewD','ballWall','ballGrip','slotH','clipW','coneOn','coneD','ledOn','ledMount','ledW','ledH','ledGap','ledL','ledT','roofOn','roofAngle','roofH','tilt','tiltDir','weight','wpct','txt','font','spacing','height','depth','bt','wt','ct','tol','lipOn','lipH','lipT','bedW','bedH','svgWhite','faceStyle','brow','plexiT','ledgeW','ledgeT','ledgeSlope','smooth','skT','engageH','clipsOn','clipN','mountMode','mountN','holeD','spacerLen','spacerOD'].forEach(id => {
   $(id).addEventListener('input', () => { if (id === 'txt' || id === 'font' || id === 'height' || id === 'wpct') state.refit = true; if (id === 'txt' || id === 'font' || id === 'height') state.manual = {}; schedule(); });
   $(id).addEventListener('change', schedule);
 });
@@ -3847,6 +3895,320 @@ $('sgEd2').addEventListener('click', () => sgEdit(2));
 $('sgReset').addEventListener('click', () => { $('sg1').value = 'ANASTASIA - ELENI'; $('sg2').value = 'ROOMS & APARTMENTS'; $('sgH1').value = '22'; $('sgH2').value = '15'; ['sg1', 'sg2', 'sgH1', 'sgH2'].forEach(id => $(id).dispatchEvent(new Event('change'))); sgRefresh(); });
 ['sg1', 'sg2', 'sgH1', 'sgH2'].forEach(id => $(id).addEventListener('input', sgRefresh));
 $('lgNoBold').addEventListener('change', () => { saveSoon(); schedule(); });
+/* ---------- πιλοτικό UI: κάρτες επιλογής, «;» βοήθειας, «Τι θα τυπώσω» ---------- */
+const UI_C = {B:'var(--c-base)', W:'var(--c-walls)', C:'var(--c-cap)', M:'var(--muted)', K:'var(--ink)', X:'var(--warn)'};
+const uiR = (x, y, w, h, c, o) => '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="1.5" style="fill:' + c + (o ? ';opacity:' + o : '') + '"/>';
+const uiSvg = (inner, vb) => '<svg viewBox="' + (vb || '0 0 120 52') + '" aria-hidden="true">' + inner + '</svg>';
+const uiLine = (d, w) => '<path d="' + d + '" style="fill:none;stroke:' + UI_C.K + ';stroke-width:' + (w || 2) + '"/>';
+const uiWall = uiR(4, 4, 10, 44, UI_C.M, 0.45) + '<path d="M4 12l10-8M4 24l10-8M4 36l10-8M4 48l10-8" style="fill:none;stroke:var(--muted);stroke-width:1"/>';
+const UI_ICON = {
+  solid: uiSvg(uiR(10, 38, 100, 6, UI_C.B) + uiR(10, 16, 7, 22, UI_C.W) + uiR(103, 16, 7, 22, UI_C.W) + uiR(10, 10, 100, 6, UI_C.C)),
+  frame: uiSvg(uiR(10, 38, 100, 6, UI_C.B) + uiR(10, 16, 7, 22, UI_C.W) + uiR(103, 16, 7, 22, UI_C.W) + uiR(10, 8, 20, 8, UI_C.W) + uiR(90, 8, 20, 8, UI_C.W) + uiR(30, 11, 60, 3, UI_C.C, 0.65)),
+  tray: uiSvg(uiR(10, 38, 100, 6, UI_C.B) + uiR(14, 26, 5, 12, UI_C.B) + uiR(101, 26, 5, 12, UI_C.B) + uiR(6, 14, 7, 24, UI_C.W) + uiR(107, 14, 7, 24, UI_C.W) + uiR(6, 8, 22, 7, UI_C.W) + uiR(92, 8, 22, 7, UI_C.W) + uiR(28, 11, 64, 3, UI_C.C, 0.65)),
+  shell: uiSvg(uiR(10, 10, 100, 8, UI_C.C) + uiR(10, 10, 7, 30, UI_C.W) + uiR(103, 10, 7, 30, UI_C.W) + uiR(18, 34, 84, 5, UI_C.B)),
+  spacer: uiSvg(uiWall + uiR(14, 20, 78, 12, UI_C.W) + uiR(92, 6, 8, 40, UI_C.B) + uiLine('M4 26H92')),
+  ball: uiSvg(uiWall + uiR(14, 14, 32, 24, UI_C.W) + '<circle cx="56" cy="26" r="10" style="fill:' + UI_C.B + ';stroke:' + UI_C.K + ';stroke-width:1"/>' + uiR(66, 24, 26, 4, UI_C.B) + uiR(92, 6, 8, 40, UI_C.B) + uiLine('M4 26H14')),
+  holes: uiSvg(uiWall + uiR(14, 6, 8, 40, UI_C.B) + uiLine('M4 26H24') + uiR(22, 21, 4, 10, UI_C.K)),
+  none: uiSvg(uiWall + uiR(14, 8, 10, 36, UI_C.X, 0.5) + uiR(24, 6, 8, 40, UI_C.B))
+};
+const UI_MINI = {
+  ball: uiSvg('<circle cx="17" cy="13" r="8" style="fill:' + UI_C.B + ';stroke:' + UI_C.K + ';stroke-width:1"/>', '0 0 34 26'),
+  socket: uiSvg(uiR(4, 6, 26, 14, UI_C.W) + '<circle cx="17" cy="13" r="5" style="fill:var(--field)"/>', '0 0 34 26'),
+  pin: uiSvg(uiR(14, 3, 6, 20, UI_C.B) + uiR(10, 3, 14, 3, UI_C.B), '0 0 34 26'),
+  tube: uiSvg(uiR(3, 8, 28, 10, UI_C.W), '0 0 34 26'),
+  hole: uiSvg(uiR(12, 3, 10, 20, UI_C.B) + '<circle cx="17" cy="13" r="3" style="fill:var(--field)"/>', '0 0 34 26'),
+  clip: uiSvg('<path d="M8 22V8h10a4 4 0 0 1 4 4v10" style="fill:none;stroke:' + UI_C.W + ';stroke-width:4"/>', '0 0 34 26'),
+  none: uiSvg(uiR(6, 8, 22, 10, UI_C.X, 0.5), '0 0 34 26')
+};
+const UI_CARDS = {
+  faceStyle: {
+    solid: {svg: UI_ICON.solid, t: 'Στυλ 1: ολόκληρο καπάκι', s: 'Βάση, τοιχώματα και συμπαγές καπάκι.'},
+    frame: {svg: UI_ICON.frame, t: 'Στυλ 2: πλαίσιο με plexi', s: 'Πλαίσιο με φρύδι από πάνω και plexi μέσα.'},
+    tray: {svg: UI_ICON.tray, t: 'Στυλ 3: πάτωμα + πλαίσιο + plexi', s: 'Δίσκος με τοιχώματα και πλαίσιο που κουμπώνει από πάνω.'},
+    shell: {svg: UI_ICON.shell, t: 'Στυλ 4: αδιάβροχο κέλυφος', s: 'Πρόσοψη και τοιχώματα ένα κομμάτι, η πλάκα μπαίνει από πίσω.'}
+  },
+  mountMode: {
+    spacer: {svg: UI_ICON.spacer, t: 'Σωληνάκι (αποστάτης)', s: 'Τρύπες με σωληνάκι που κρατά το γράμμα μακριά από τον τοίχο.'},
+    ball: {svg: UI_ICON.ball, t: 'Μπάλα + υποδοχή', s: 'Η μπάλα κουμπώνει στην υποδοχή του τοίχου, με καβίλια.'},
+    holes: {svg: UI_ICON.holes, t: 'Τρύπες στη βάση', s: 'Βιδώνεται απευθείας στον τοίχο, χωρίς απόσταση.'},
+    none: {svg: UI_ICON.none, t: 'Χωρίς τρύπες', s: 'Κολλάς το γράμμα στον τοίχο.'}
+  }
+};
+function uiMakeCards(selId){
+  const sel = $(selId), items = UI_CARDS[selId];
+  if (!sel || !items || sel.dataset.cards) return;
+  sel.dataset.cards = '1';
+  const wrap = document.createElement('div');
+  wrap.className = 'cards'; wrap.id = selId + 'Cards';
+  Object.keys(items).forEach(v => {
+    const it = items[v], b = document.createElement('button');
+    b.type = 'button'; b.className = 'cardopt'; b.dataset.v = v;
+    b.innerHTML = it.svg + '<b></b><span></span>';
+    b.querySelector('b').textContent = it.t;
+    b.querySelector('span').textContent = it.s;
+    b.addEventListener('click', () => {
+      if (sel.value !== v){
+        sel.value = v;
+        sel.dispatchEvent(new Event('input', {bubbles:true}));
+        sel.dispatchEvent(new Event('change', {bubbles:true}));
+      }
+      uiCardsSync();
+    });
+    wrap.appendChild(b);
+  });
+  sel.parentNode.insertBefore(wrap, sel);
+  sel.style.display = 'none';
+}
+function uiCardsSync(){
+  document.querySelectorAll('.cards').forEach(w => {
+    const sel = $(w.id.replace(/Cards$/, ''));
+    if (sel) w.querySelectorAll('.cardopt').forEach(b => b.setAttribute('aria-pressed', sel.value === b.dataset.v ? 'true' : 'false'));
+  });
+}
+const UI_TIPS = {
+  ballGrip: 'Πόσο στενεύει το άνοιγμα της υποδοχής σε σχέση με τη μπάλα. Μεγαλύτερο = κρατά πιο σφιχτά, αλλά μπαίνει δύσκολα και τα δάχτυλα κουράζονται. Μικρότερο = μπαίνει εύκολα, αλλά μπορεί να βγαίνει μόνο του.',
+  slotH: 'Πόσο ψηλά κατεβαίνουν οι 4 σχισμές της υποδοχής. Πιο κοντές = πιο σκληρά δάχτυλα και πιο σφιχτό κούμπωμα. Δεν μπορεί να γίνει μικρότερο από το χείλος που πατά πάνω στη μπάλα.',
+  ballWall: 'Το πάχος του τοιχώματος της υποδοχής. Πιο λεπτό = πιο μαλακό και πιο εύκολο κούμπωμα. Πιο χοντρό = πιο σκληρό.',
+  pinTol: 'Το κενό γύρω από την καβίλια στις τρύπες της μπάλας και της πλάκας. 0 = πολύ σφιχτό, μπορεί να μην μπαίνει. Δοκίμασε πρώτα ένα δείγμα στο υλικό που θα χρησιμοποιήσεις.',
+  clipN: 'Πόσα clips μπαίνουν σε κάθε γράμμα. Περισσότερα = πιο σταθερό κλείσιμο της βάσης στα τοιχώματα.',
+  clipW: 'Το πλάτος κάθε clip κατά μήκος του τοιχώματος. Πιο στενό = χωράει σε απότομες στροφές χωρίς να βγαίνει έξω, αλλά κρατά λίγο λιγότερο.',
+  spacerLen: 'Πόσα mm απέχει η πλάκα από τον τοίχο. Περισσότερα = περισσότερος χώρος για φως και σκιά πίσω από το γράμμα, αλλά μεγαλύτερος μοχλός πάνω στα στηρίγματα.',
+  engageH: 'Πόσο κάθεται το πλαίσιο πάνω στο πάτωμα. Μεγαλύτερη επικάλυψη = πιο σταθερό και καλύτερη προστασία από νερό.',
+  brow: 'Το φρύδι είναι το ορατό χείλος του πλαισίου γύρω από το plexi. Πιο φαρδύ = πιο έντονο πλαίσιο, πιο λεπτό = περισσότερο plexi να φαίνεται.',
+  skT: 'Το πάχος του πλαϊνού τοιχώματος του πλαισίου. Πιο χοντρό = πιο στέρεο, αλλά χρειάζεται περισσότερο χώρο.',
+  drainMode: 'Μικρές τρύπες στα χαμηλά σημεία για να φεύγει το νερό. «Μόνο ένδειξη» τις δείχνει με κόκκινο και τις ανοίγεις εσύ με τρυπάνι. Με «Να ανοίγονται στην εκτύπωση» βγαίνουν έτοιμες.',
+  cableMode: 'Η τρύπα απ’ όπου βγαίνει το καλώδιο των LED, κάτω στο γράμμα. Λειτουργεί όπως οι τρύπες αποστράγγισης: μόνο ένδειξη ή ανοιγμένη στην εκτύπωση.'
+};
+function uiAddTips(){
+  Object.keys(UI_TIPS).forEach(id => {
+    const lab = document.querySelector('label[for="' + id + '"]');
+    if (!lab || lab.dataset.tip) return;
+    lab.dataset.tip = '1';
+    const field = lab.closest('.field') || lab.parentNode;
+    const p = document.createElement('p');
+    p.className = 'qtip'; p.hidden = true; p.textContent = UI_TIPS[id];
+    const q = document.createElement('button');
+    q.type = 'button'; q.className = 'qm'; q.textContent = '?'; q.setAttribute('aria-label', 'Βοήθεια');
+    q.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); p.hidden = !p.hidden; });
+    lab.appendChild(q);
+    field.after(p);
+  });
+}
+function uiInitPilot(){
+  const box = document.createElement('div');
+  box.className = 'printbox'; box.id = 'printBox';
+  uiMakeCards('faceStyle'); uiMakeCards('mountMode');
+  const mf = $('mountMode').parentNode;
+  mf.after(box);
+  uiAddTips(); uiCardsSync();
+}
+function uiPrintSummary(P, model){
+  const box = $('printBox'); if (!box) return;
+  const pcs = (model && model.pieces) || [];
+  const cnt = f => pcs.reduce((a, pc) => a + f(pc), 0);
+  const mounts = cnt(pc => (pc.mounts || []).length), clips = cnt(pc => (pc.clips || []).length);
+  const rows = [];
+  if (P.mountMode === 'ball'){
+    rows.push([UI_MINI.ball, 'Μπάλες', mounts, 'Τυπώνονται ξεχωριστά και κολλιούνται στην πλάκα.']);
+    rows.push([UI_MINI.socket, 'Υποδοχές', mounts, 'Βιδώνονται στον τοίχο, η μπάλα κουμπώνει μέσα τους.']);
+    rows.push([UI_MINI.pin, 'Καβίλιες', mounts, 'Ενώνουν τη μπάλα με την πλάκα.']);
+  } else if (P.mountMode === 'spacer'){
+    rows.push([UI_MINI.tube, 'Αποστάτες (σωληνάκια)', mounts, P.spacerSep ? 'Τυπώνονται ξεχωριστά και μπαίνουν σαν προσθήκη.' : 'Είναι κομμάτι της βάσης.']);
+  } else if (P.mountMode === 'holes'){
+    rows.push([UI_MINI.hole, 'Τρύπες στη βάση', mounts, 'Για βίδες στον τοίχο. Δεν τυπώνεται κάτι επιπλέον.']);
+  } else {
+    rows.push([UI_MINI.none, 'Καμία στήριξη', null, 'Θα κολλήσεις το γράμμα στον τοίχο.']);
+  }
+  if (P.clipsOn && clips) rows.push([UI_MINI.clip, 'Clips', clips, 'Είναι μέρος του ίδιου κομματιού με τη βάση.']);
+  box.textContent = '';
+  const h = document.createElement('h4'); h.textContent = 'Τι θα τυπώσεις με αυτή τη στήριξη'; box.appendChild(h);
+  const ul = document.createElement('ul');
+  rows.forEach(r => {
+    const li = document.createElement('li');
+    li.innerHTML = r[0] + '<div><b></b><br><small></small></div>';
+    li.querySelector('b').textContent = r[1] + (r[2] != null ? ' × ' + r[2] : '');
+    li.querySelector('small').textContent = r[3];
+    ul.appendChild(li);
+  });
+  box.appendChild(ul);
+  if (pcs.length){ const n = document.createElement('small'); n.textContent = 'Μετρημένα για τα γράμματα του τρέχοντος project.'; box.appendChild(n); }
+}
+uiInitPilot();
+/* ---------- πιλοτικό UI, μέρος 2: διαγράμματα, κάρτες LED, καρτέλα «Πινακίδα», περισσότερα «;» ---------- */
+UI_ICON.ledsnap = uiSvg(uiR(10, 30, 100, 6, UI_C.B) + uiR(40, 24, 40, 5, UI_C.W) + uiR(40, 15, 5, 10, UI_C.W) + uiR(75, 15, 5, 10, UI_C.W) + uiR(48, 19, 24, 4, UI_C.X, 0.8) + uiR(46, 36, 4, 10, UI_C.W) + uiR(70, 36, 4, 10, UI_C.W));
+UI_ICON.ledglue = uiSvg(uiR(10, 30, 100, 6, UI_C.B) + uiR(40, 26, 40, 3, UI_C.X, 0.6) + uiR(40, 22, 40, 4, UI_C.W) + uiR(40, 13, 5, 10, UI_C.W) + uiR(75, 13, 5, 10, UI_C.W) + uiR(48, 17, 24, 4, UI_C.X, 0.8));
+UI_MINI.led = uiSvg(uiR(5, 14, 24, 4, UI_C.W) + uiR(5, 6, 4, 10, UI_C.W) + uiR(25, 6, 4, 10, UI_C.W), '0 0 34 26');
+UI_CARDS.ledMount = {
+  snap: {svg: UI_ICON.ledsnap, t: 'Κούμπωμα', s: 'Η στήριξη κουμπώνει σε υποδοχή στην πλάκα.'},
+  glue: {svg: UI_ICON.ledglue, t: 'Κόλλα', s: 'Κολλιέται πάνω στην πλάκα, χωρίς τρύπες.'}
+};
+const uiDiagram = (svg, cap) => {
+  const d = document.createElement('div');
+  d.className = 'diagram';
+  d.innerHTML = svg;
+  if (cap){ const p = document.createElement('p'); p.className = 'hint'; p.textContent = cap; d.appendChild(p); }
+  return d;
+};
+const uiTxt = (x, y, t, a) => '<text x="' + x + '" y="' + y + '" text-anchor="' + (a || 'start') + '" style="font:10px system-ui,sans-serif;fill:var(--ink)">' + t + '</text>';
+const uiLead = (d) => '<path d="' + d + '" style="fill:none;stroke:var(--muted);stroke-width:1"/>';
+function uiBuildDiagrams(){
+  // Διαστάσεις: τομή γράμματος
+  const dims = $('pane-dims');
+  if (dims){
+    const ox = 38;
+    const svg = '<svg viewBox="0 0 340 150" aria-hidden="true">' +
+      uiR(ox, 30, 180, 10, UI_C.C) + uiR(ox, 40, 10, 80, UI_C.W) + uiR(ox + 170, 40, 10, 80, UI_C.W) + uiR(ox, 120, 180, 10, UI_C.B) +
+      uiR(ox + 12, 40, 4, 22, UI_C.C) + uiR(ox + 164, 40, 4, 22, UI_C.C) +
+      uiLine('M24 30V130', 1) + uiLine('M20 36l4-6 4 6M20 124l4 6 4-6', 1) +
+      '<text transform="rotate(-90 12 80)" x="12" y="80" text-anchor="middle" style="font:10px system-ui,sans-serif;fill:var(--ink)">Συνολικό βάθος</text>' +
+      uiLead('M' + (ox + 180) + ' 35H' + (ox + 192)) + uiTxt(ox + 196, 38, 'Πάχος καπακιού') +
+      uiLead('M' + (ox + 168) + ' 52H' + (ox + 192)) + uiTxt(ox + 196, 55, 'Χείλος καπακιού') +
+      uiLead('M' + (ox + 180) + ' 80H' + (ox + 192)) + uiTxt(ox + 196, 83, 'Πάχος τοιχώματος') +
+      uiLead('M' + (ox + 180) + ' 125H' + (ox + 192)) + uiTxt(ox + 196, 128, 'Πάχος βάσης') +
+      '</svg>';
+    dims.insertBefore(uiDiagram(svg, 'Τομή γράμματος από το πλάι. Το ύψος γράμματος είναι το μέγεθός του πάνω στον τοίχο.'), dims.firstChild);
+  }
+  // Μορφή γραμμάτων: λεπτό, κανονικό, bold
+  const shape = $('pane-shape');
+  if (shape){
+    const bar = (x, w) => uiR(x - w / 2, 6, w, 40, UI_C.K);
+    const svg = '<svg viewBox="0 0 320 70" aria-hidden="true">' + bar(60, 8) + bar(160, 16) + bar(260, 30) +
+      uiTxt(60, 62, 'Λεπτό', 'middle') + uiTxt(160, 62, 'Κανονικό', 'middle') + uiTxt(260, 62, 'Bold', 'middle') + '</svg>';
+    shape.insertBefore(uiDiagram(svg, 'Το bold φουσκώνει το περίγραμμα του γράμματος. Το ύψος μένει ίδιο.'), shape.firstChild);
+  }
+  // Επιφάνεια: επίπεδη, στέγη, κλίση
+  const surf = $('pane-surf');
+  if (surf){
+    const poly = (pts) => '<polygon points="' + pts + '" style="fill:' + UI_C.W + '"/>';
+    const svg = '<svg viewBox="0 0 320 76" aria-hidden="true">' +
+      poly('10,56 10,30 100,30 100,56') + poly('115,56 115,34 160,12 205,34 205,56') + poly('225,56 225,34 315,12 315,56') +
+      uiR(10, 56, 90, 4, UI_C.B) + uiR(115, 56, 90, 4, UI_C.B) + uiR(225, 56, 90, 4, UI_C.B) +
+      uiTxt(55, 72, 'Επίπεδη', 'middle') + uiTxt(160, 72, 'Στέγη', 'middle') + uiTxt(270, 72, 'Κλίση', 'middle') + '</svg>';
+    surf.insertBefore(uiDiagram(svg, 'Τρεις τρόποι για την πάνω επιφάνεια. Η στέγη και η κλίση ρυθμίζονται παρακάτω.'), surf.firstChild);
+  }
+  // Πηγή: εικονίδια στα δύο κουμπιά
+  const ic = {
+    tabText: '<svg viewBox="0 0 48 28" aria-hidden="true"><path d="M6 24L16 4l10 20M10 17h12M32 24V12m0 4c0-6 10-6 10 0v8" style="fill:none;stroke:currentColor;stroke-width:3"/></svg>',
+    tabSvg: '<svg viewBox="0 0 48 28" aria-hidden="true"><rect x="3" y="2" width="42" height="24" rx="3" style="fill:none;stroke:currentColor;stroke-width:2"/><path d="M8 21c6-12 12-12 18-5s9 4 14-7" style="fill:none;stroke:currentColor;stroke-width:3"/></svg>'
+  };
+  Object.keys(ic).forEach(id => { const b = $(id); if (b && !b.querySelector('svg')) b.insertAdjacentHTML('afterbegin', ic[id]); });
+}
+function uiBuildSignPane(){
+  const parts = $('pane-parts');
+  if (!parts || $('pane-sign')) return;
+  const need = ['sg1', 'sgEd1', 'sgEd2', 'sgReset', 'lgFile', 'lgInfo', 'lgOn', 'lgNoBold', 'lgH', 'lgFollow', 'sgEdLg', 'sgCheck', 'sgPrev', 'sgAll', 'kitSpare', 'sgKit', 'sgDxf', 'sgPaper', 'sgBtn', 'sgMsg'];
+  if (need.some(id => !$(id))) return;
+  const sec = document.createElement('section');
+  sec.className = 'pane'; sec.id = 'pane-sign'; sec.hidden = true;
+  sec.dataset.title = 'Πινακίδα';
+  sec.dataset.desc = 'Τα γράμματα και το λογότυπο πάνω στην αψίδα, PDF για τον τοίχο και λήψεις για όλη την πινακίδα.';
+  parts.parentNode.insertBefore(sec, parts);
+  const up = (id, sel) => { const e = $(id); return sel ? e.closest(sel) : e; };
+  const mk = (title, open, els) => {
+    const d = document.createElement('details');
+    d.className = 'sbox'; d.open = open;
+    const sm = document.createElement('summary'); sm.textContent = title; d.appendChild(sm);
+    els.forEach(e => { if (e) d.appendChild(e); });
+    sec.appendChild(d);
+  };
+  mk('Μέγεθος και γραμμές', true, [up('sg1', '.grid2'), $('sgEd1'), $('sgEd2'), $('sgReset')]);
+  mk('Λογότυπο', false, [up('lgFile', '.file'), $('lgInfo'), up('lgOn', 'label'), up('lgNoBold', 'label'), up('lgH', '.grid2'), up('lgFollow', 'label'), $('sgEdLg')]);
+  mk('Προεπισκόπηση και λήψεις', true, [$('sgCheck'), $('sgPrev'), $('sgAll'), up('kitSpare', '.field'), $('sgKit'), $('sgDxf'), up('sgPaper', '.field'), $('sgBtn'), $('sgMsg')]);
+  parts.querySelectorAll('h3.sub').forEach(h => { if (/Χωροθέτηση στην αψίδα/.test(h.textContent)) h.remove(); });
+  // κουμπί στο μενού
+  const old = document.querySelector('.navb[data-pane="parts"]');
+  if (old){
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'navb'; b.dataset.pane = 'sign';
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18Q12 4 21 18"/><path d="M6.5 15.5h2M11 11.5h2M15.5 15.5h2"/></svg><span><b></b><small></small></span>';
+    b.querySelector('b').textContent = 'Πινακίδα';
+    b.querySelector('small').textContent = 'Αψίδα, λογότυπο, PDF';
+    old.parentNode.insertBefore(b, old);
+  }
+}
+Object.assign(UI_TIPS, {
+  svgWhite: 'Αν η εικόνα έχει λευκό φόντο, το πρόγραμμα το αγνοεί ώστε να μη γίνει ορθογώνιο κομμάτι. Κλείστο μόνο αν το λευκό είναι μέρος του σχεδίου.',
+  spacing: 'Η απόσταση ανάμεσα στα γράμματα του κειμένου.',
+  weight: 'Φουσκώνει το περίγραμμα του γράμματος (ή το λεπταίνει, με αρνητική τιμή). Βοηθά όταν η γραμματοσειρά είναι πολύ λεπτή για εκτύπωση. Σε εικόνα με κομμάτια κοντά μεταξύ τους μπορεί να τα ενώσει.',
+  wpct: 'Το πλάτος των γραμμάτων: 100% είναι το κανονικό. Πάνω από 100 τα πλαταίνει, κάτω από 100 τα στενεύει.',
+  smooth: 'Πόσο ομαλές βγαίνουν οι καμπύλες. Αν βλέπεις γωνίες στις στροφές, ανέβασέ το.',
+  depth: 'Το συνολικό βάθος του γράμματος από την πλάκα ως το καπάκι. Πρέπει να χωράει την ταινία LED και τη στήριξή της.',
+  bt: 'Το πάχος της πλάκας στο πίσω μέρος. Πιο χοντρή = πιο στερεή, αλλά περισσότερο υλικό και χρόνος.',
+  wt: 'Το πάχος των τοιχωμάτων γύρω από το γράμμα. Πιο χοντρά = πιο στερεά, αλλά περισσότερο υλικό.',
+  ct: 'Το πάχος του καπακιού (πρόσοψης). Αν το καπάκι είναι από ημιδιάφανο υλικό, πιο λεπτό = περισσότερο φως.',
+  tol: 'Το κενό ανάμεσα σε κομμάτια που εφαρμόζουν μεταξύ τους (π.χ. καπάκι και τοιχώματα). Αν εφαρμόζουν πολύ χαλαρά ή δεν μπαίνουν, άλλαξέ το λίγο. Εξαρτάται από τον εκτυπωτή και το υλικό.',
+  lipOn: 'Το χείλος είναι μια λεπτή προεξοχή του καπακιού που μπαίνει μέσα στα τοιχώματα, ώστε το καπάκι να κάθεται στη θέση του και να μη γλιστρά.',
+  lipH: 'Πόσο βαθιά μπαίνει το χείλος μέσα στα τοιχώματα.',
+  lipT: 'Το πάχος του χείλους. Πιο λεπτό = πιο εύκολο να μπει, πιο χοντρό = πιο στέρεο.',
+  roofOn: 'Η πάνω επιφάνεια ανεβαίνει σαν στέγη στη μέση κάθε γραμμής, ώστε το νερό να τρέχει στα πλάγια.',
+  roofAngle: 'Πόσο απότομη είναι η στέγη. Μεγαλύτερη γωνία = πιο απότομη.',
+  roofH: 'Το μέγιστο ύψος που μπορεί να φτάσει ο κορφιάς της στέγης.',
+  tilt: 'Γέρνει την πάνω επιφάνεια προς μία κατεύθυνση, π.χ. για να φεύγει το νερό.',
+  tiltDir: 'Προς ποια πλευρά είναι το ψηλότερο σημείο της κλίσης.',
+  ledW: 'Το πλάτος της ταινίας LED που έχεις αγοράσει (συνήθως 8 ή 10 mm). Η στήριξη φτιάχνεται για αυτό το πλάτος.',
+  ledH: 'Το πάχος της ταινίας LED μαζί με την κόλλα της, για να χωράει στο κανάλι της στήριξης.',
+  ledGap: 'Η απόσταση ανάμεσα στις στηρίξεις κατά μήκος της ταινίας. Μικρότερη = περισσότερες στηρίξεις και πιο σταθερή ταινία.',
+  ledL: 'Το μήκος κάθε στήριξης κατά μήκος της ταινίας. Πιο κοντό = λιγότερο υλικό και χωράει σε στενά γράμματα, αλλά κρατά λιγότερο.',
+  bedW: 'Το πλάτος του τραπεζιού του εκτυπωτή σου, για να ελέγχεται αν χωράνε τα κομμάτια.',
+  bedH: 'Το βάθος του τραπεζιού του εκτυπωτή σου, για να ελέγχεται αν χωράνε τα κομμάτια.',
+  sgRise: 'Πόσο ψηλότερα είναι το κέντρο της αψίδας από τις δύο γωνίες της πινακίδας.',
+  ledT: 'Το πάχος του πατώματος και των δύο πλαϊνών τοιχωμάτων της στήριξης LED (τα χείλη πάνω από την ταινία μένουν 1 mm). Πιο λεπτό = χαμηλότερη και στενότερη στήριξη. Για ακροφύσιο 0,4 mm το 1,2 βγαίνει συνήθως πιο καθαρό από το 1,0.',
+  kitSpare: 'Επιπλέον κομμάτια στηριγμάτων για σπασίματα και δοκιμές, ανά τύπο.',
+  sgD1: 'Το πάχος (συνολικό βάθος) των γραμμάτων αυτής της γραμμής. Αν το αφήσεις κενό, παίρνει το βάθος από τις Διαστάσεις.',
+  sgD2: 'Το πάχος (συνολικό βάθος) των γραμμάτων αυτής της γραμμής. Αν το αφήσεις κενό, παίρνει το βάθος από τις Διαστάσεις.',
+  lgD: 'Το πάχος (συνολικό βάθος) του λογοτύπου. Αν το αφήσεις κενό, παίρνει το βάθος από τις Διαστάσεις.'
+});
+function uiAddTips2(){
+  Object.keys(UI_TIPS).forEach(id => {
+    const inp = $(id);
+    if (!inp || (inp.closest('label') && inp.closest('label').dataset.tip) ) return;
+    if (document.querySelector('label[for="' + id + '"][data-tip]')) return;
+    let lab = document.querySelector('label[for="' + id + '"]'), anchor;
+    if (lab){ anchor = lab.closest('.field') || lab.parentNode; }
+    else { lab = inp.closest('label'); anchor = lab; }
+    if (!lab || !anchor) return;
+    lab.dataset.tip = '1';
+    const p = document.createElement('p');
+    p.className = 'qtip'; p.hidden = true; p.textContent = UI_TIPS[id];
+    const q = document.createElement('button');
+    q.type = 'button'; q.className = 'qm'; q.textContent = '?'; q.setAttribute('aria-label', 'Βοήθεια');
+    q.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); p.hidden = !p.hidden; });
+    (lab.querySelector('span') || lab).appendChild(q);
+    anchor.after(p);
+  });
+}
+function uiLedSummary(P, model){
+  const box = $('ledPrintBox'); if (!box) return;
+  box.hidden = !P.ledOn;
+  if (!P.ledOn) return;
+  const pcs = (model && model.pieces) || [];
+  let glue = 0, snap = 0;
+  pcs.forEach(pc => (pc.led || []).forEach(l => { if (l.g) glue++; else snap++; }));
+  box.textContent = '';
+  const h = document.createElement('h4'); h.textContent = 'Τι θα τυπώσεις για τα LED'; box.appendChild(h);
+  const ul = document.createElement('ul');
+  const row = (n, t, sub) => {
+    const li = document.createElement('li');
+    li.innerHTML = UI_MINI.led + '<div><b></b><br><small></small></div>';
+    li.querySelector('b').textContent = t + ' × ' + n; li.querySelector('small').textContent = sub; ul.appendChild(li);
+  };
+  if (snap) row(snap, 'Στηρίξεις LED με κούμπωμα', 'Τυπώνονται ξεχωριστά και κουμπώνουν σε υποδοχές της πλάκας.');
+  if (glue) row(glue, 'Στηρίξεις LED με κόλλα', 'Τυπώνονται ξεχωριστά και κολλιούνται στην πλάκα.');
+  if (!snap && !glue) row(0, 'Στηρίξεις LED', 'Δεν χωράει καμία με τις τωρινές ρυθμίσεις.');
+  box.appendChild(ul);
+}
+function uiInitPilot2(){
+  uiBuildDiagrams();
+  uiBuildSignPane();
+  uiMakeCards('ledMount');
+  if ($('ledMountField') && !$('ledPrintBox')){
+    const b = document.createElement('div'); b.className = 'printbox'; b.id = 'ledPrintBox'; b.hidden = true;
+    $('ledMountField').after(b);
+  }
+  uiAddTips2(); uiCardsSync();
+}
+uiInitPilot2();
+
 $('sgPaper').addEventListener('change', saveSoon);
 $('ledMount').addEventListener('change', () => {   // η γενική επιλογή κόλλα/κουμπωτές ισχύει και για στηρίξεις που έχουν ήδη επεξεργαστεί
   const v = $('ledMount').value === 'glue' ? 1 : 0;
@@ -3922,6 +4284,10 @@ rebuild();
   PAIRS.push(["Μεγάλη διάσταση τρύπας καλωδίου (έλλειψη, ύψος = μεγάλη − 2 mm)", "Cable hole long dimension (ellipse, height = long − 2 mm)"], ["Μέγεθος χαρτιού για το PDF 1:1", "Paper size for the 1:1 PDF"], ["Λήψη PDF χωροθέτησης (1:1)", "Download layout PDF (1:1)"], ["Το λογότυπο χωρίς bold (να μην ισχύει το έξτρα περίγραμμα)", "Logo without bold (ignore the extra outline)"], ["Μέτρηση", "Measure"], ["Πάτα το πρώτο σημείο και μετά το δεύτερο. Κουμπώνει σε κέντρα και στην περίμετρο· με Alt πατημένο μετράς ελεύθερα. Esc = καθαρισμός.", "Click the first point, then the second. It snaps to centers and the outline; hold Alt to measure freely. Esc = clear."], ["Διαγώνιος ", "Diagonal "], [" mm · Οριζόντια ", " mm · Horizontal "], [" mm · Κάθετη ", " mm · Vertical "], [" mm · Γωνία ", " mm · Angle "], ["Πλάτος clip (πιο στενό = χωράει σε απότομες στροφές)", "Clip width (narrower = fits tight curves)"], ["Ύψος σχισίματος (πιο κοντό = πιο σφιχτό)", "Slot height (shorter = tighter)"], [" Οι σχισμές έχουν ύψος ", " Slot height "], [" (ελάχιστο για να λυγίζουν τα δάχτυλα· η τιμή που έβαλες ήταν μικρότερη)", " (minimum so the fingers can flex; your value was smaller)"], [", από κάτω η υποδοχή είναι γεμάτη.", ", solid below the slots."], ["Μπάλα + υποδοχή (κούμπωμα, με καβίλια)", "Ball + socket (snap, with dowel pin)"], ["Διάμετρος καβίλιας", "Dowel pin diameter"], ["Ανοχή τρύπας καβίλιας (0 = πιο σφιχτό)", "Dowel hole clearance (0 = tighter)"], ["Βάθος καβίλιας μέσα στη μπάλα", "Dowel depth inside the ball"], ["Η καβίλια ", "The dowel pin "], [" mm δεν χωράει σε μπάλα ", " mm does not fit in a ball "], [" mm. Βάλε διάμετρο μπάλας τουλάχιστον ", " mm. Set the ball diameter to at least "], [" mm ή μίκρυνε την καβίλια.", " mm or use a smaller pin."], [" mm. Καβίλια ", " mm. Dowel pin "], [" mm, μήκος ", " mm, length "], [" mm. Τρύπα στην πλάκα και στη μπάλα ", " mm. Hole in the plate and in the ball "], [" Προσοχή: ο λαιμός της μπάλας έχει μόνο ", " Warning: the ball neck has only "], [" mm τοίχωμα γύρω από την τρύπα. Καλύτερα μπάλα ", " mm of wall around the hole. Better a ball of "], [" mm ή περισσότερο.", " mm or more."], [" mm (συν κεφαλή-στοπ ", " mm (plus stop head "], ["Ύψος βάσης μπάλας (πάτωμα για κόλλα)", "Ball base height (floor for glue)"], ["Διάμετρος βάσης μπάλας (0 = όσο η υποδοχή)", "Ball base diameter (0 = same as the socket)"], [" mm). Βάση μπάλας ", " mm). Ball base "], ["Λήψη στηριγμάτων όλης της πινακίδας (καβίλιες, υποδοχές, μπάλες, LED) σε ZIP", "Download all sign fixings (dowel pins, sockets, balls, LED) as ZIP"], ["Έξτρα κομμάτια ανά τύπο στηρίγματος (για σπασίματα)", "Spare pieces per fixing type (for breakage)"]);
   PAIRS.push(["Τρύπα εξόδου καλωδίου (μία ανά γράμμα, κάτω στην πλάκα)", "Cable exit hole (one per letter, at the bottom of the plate)"], ["Να ανοίγεται στην εκτύπωση", "Cut open in the print"], ["Νεροσταλάκτης: εξοχή προς τα έξω στο πίσω άκρο του πλαισίου", "Drip edge: outward projection at the back edge of the frame"], ["Εξοχή νεροσταλάκτη (45°, χωρίς support)", "Drip edge projection (45°, no support)"], ["Πάχος τοιχώματος υποδοχής (πιο λεπτό = πιο μαλακό)", "Socket wall thickness (thinner = softer)"], ["Σφίξιμο κουμπώματος (πιο μικρό = πιο εύκολο)", "Snap grip (smaller = easier)"], ["Χρώματα (στο 3D και στο 3MF)", "Colors (in 3D and in 3MF)"], ["Τρύπα καλωδίου", "Cable hole"], ["Οι αλλαγές φαίνονται αμέσως στην προεπισκόπηση 3D. Στο 3MF μπαίνουν τα χρώματα της βάσης, των τοιχωμάτων, του καπακιού, του plexi και των στηρίξεων LED.", "Changes show immediately in the 3D preview. The 3MF gets the colors of the base, walls, cap, plexi and LED mounts."], ["Χωροθέτηση στην αψίδα (PDF 1:1)", "Layout on the arch (PDF 1:1)"], ["Πάνω γραμμή", "Top line"], ["Ύψος γραμμάτων πάνω", "Top letter height"], ["Κάτω γραμμή", "Bottom line"], ["Ύψος γραμμάτων κάτω", "Bottom letter height"], ["Μήκος πίνακα (άνοιγμα)", "Sign length (span)"], ["Ύψος πίνακα", "Sign height"], ["Ανάβαση στο κέντρο (πάνω από τις γωνίες)", "Rise at the center (above the corners)"], ["Ύψος γωνιών από το έδαφος", "Corner height above the ground"], ["Κάτω περιθώριο", "Bottom margin"], ["Κενό ανάμεσα στις γραμμές", "Gap between the lines"], ["Λογότυπο (SVG ή PNG)", "Logo (SVG or PNG)"], ["Δεν έχεις φορτώσει λογότυπο. Κάθε ξεχωριστό σχήμα του γίνεται ξεχωριστό κομμάτι με δικά του στηρίγματα.", "You haven't loaded a logo. Each separate shape of it becomes a separate piece with its own mounts."], ["Να μπει το λογότυπο στην πινακίδα", "Put the logo on the sign"], ["Ύψος λογοτύπου", "Logo height"], ["Θέση κέντρου από το αριστερό άκρο", "Center position from the left edge"], ["Ύψος από την κάτω άκρη", "Height from the bottom edge"], ["Γέρνει με την καμπύλη", "Tilts with the curve"], ["Διόρθωση σημαδιών λογοτύπου", "Edit logo marks"], ["Διόρθωση σημαδιών πάνω γραμμής", "Edit top line marks"], ["Διόρθωση σημαδιών κάτω γραμμής", "Edit bottom line marks"], ["Αρχικά κείμενα και ύψη", "Initial texts and heights"], ["Δες το τελικό αποτέλεσμα πάνω στην πινακίδα", "See the final result on the sign"], ["Λήψη όλης της πινακίδας (ZIP με όλα τα γράμματα)", "Download the whole sign (ZIP with all the letters)"], ["Λήψη όλων των DXF για plexi (ZIP)", "Download all plexi DXF files (ZIP)"], ["Τα γράμματα μπαίνουν πάνω στην καμπύλη της αψίδας και γέρνουν όσο η εφαπτομένη. Χρησιμοποιεί τη γραμματοσειρά, το πάχος και την απόσταση γραμμάτων που έχεις ορίσει στο project. Τα στηρίγματα είναι αυτά που έχεις διορθώσει στο editor, ανά γράμμα και ανά ύψος (κόκκινα στο PDF). Όπου δεν υπάρχουν, μπαίνουν τα αυτόματα (μπλε). Τύπωσέ το σε 100% (χωρίς «Προσαρμογή στη σελίδα»).", "The letters are placed along the curve of the arch and tilt to follow the tangent. It uses the font, weight and letter spacing you set in the project. The mounts are the ones you corrected in the editor, per letter and per height (red in the PDF). Where there are none, the automatic ones are used (blue). Print it at 100% (not “Fit to page”)."], ["+ Τρύπα καλωδίου", "+ Cable hole"], ["Δεν βρέθηκε σχήμα στο αρχείο, ή ο browser δεν μπόρεσε να το διαβάσει. Δοκίμασε χωρίς την αγνόηση λευκού φόντου.", "No shape was found in the file, or the browser could not read it. Try without ignoring the white background."], ["τρύπα καλωδίου ", "cable hole "], ["δεν χωράει τρύπα καλωδίου", "no room for a cable hole"], [" γράμματα δεν βρέθηκε ελεύθερη θέση για την τρύπα καλωδίου στην πλάκα", " letters: no free spot was found for the cable hole in the plate"], [" σημεία δεν χωράει η τρύπα αποστράγγισης στην πλάκα (πολύ κοντά σε τοίχωμα ή σε τρύπα στήριξης)· μετακίνησέ την από την επεξεργασία σημείων", " points: the drain hole does not fit in the plate (too close to a wall or a mounting hole); move it in the point editor"], ["Το πάτωμα είναι δίσκος με τοιχώματα ένα κομμάτι. Το κίτρινο πλαίσιο (με φρύδι και πλαϊνό) φοράει από πάνω και κουμπώνει. Το plexi μπαίνει μέσα στο πλαίσιο από κάτω. Το πλαίσιο της τρύπας (π.χ. του Α) είναι ξεχωριστό κομμάτι. Ο νεροσταλάκτης είναι μια εξοχή προς τα έξω στο πίσω άκρο του πλαισίου, με κλίση 45°, ώστε το νερό να στάζει μακριά από τη σχισμή. Ο εσωτερικός νεροσταλάκτης είναι μια εξοχή στο γκρι τοίχωμα, μέσα στην επικάλυψη, άρα κρύβεται κάτω από το κίτρινο. Επειδή το πλαίσιο πρέπει να περάσει πάνω της, η εξοχή δεν ξεπερνά το κενό μείον 0,2 mm. Το κίτρινο έχει από πάνω της αυλάκωση (φωλιά) και ακριβώς πάνω από την αυλάκωση μια μικρή προεξοχή, ώστε το νερό να μη ανεβαίνει με το τριχοειδές φαινόμενο. Ό,τι περάσει πέφτει στην πλάκα και φεύγει από την τρύπα αποστράγγισης.", "The floor is a tray with its walls in one piece. The yellow frame (with its brow and side) slides on from above and snaps in. The plexi goes into the frame from below. The frame of the hole (e.g. of the A) is a separate piece. The drip edge is an outward projection at the back edge of the frame, at 45°, so the water drips away from the slot. The inner drip edge is a projection on the gray wall, inside the overlap, so it is hidden under the yellow part. Because the frame has to pass over it, the projection does not exceed the gap minus 0.2 mm. The yellow part has a groove (nest) on top, and just above the groove a small ridge, so the water does not climb up by capillary action. Whatever gets through falls onto the plate and leaves through the drain hole."], ["Η πλάκα απέχει από τον τοίχο ", "The plate is "], [" mm. Η υποδοχή στον τοίχο έχει ύψος ", " mm from the wall. The wall socket is "], [", από κάτω η υποδοχή είναι γεμάτη. Καβίλια ", ", solid below the slots. Dowel pin "], ["Δεν χωράει η στήριξη LED με αυτό το πάχος ταινίας. Αύξησε το συνολικό βάθος.", "The LED mount does not fit with this strip thickness. Increase the total depth."], ["Για την υποδοχή μπάλα η «Απόσταση από τον τοίχο» πρέπει να είναι τουλάχιστον ", "For the ball socket, the “Distance from the wall” must be at least "], ["Για τη φωλιά στο κίτρινο το πάχος πλαϊνού πλαισίου πρέπει να είναι τουλάχιστον 1,3 mm.", "For the groove in the yellow part, the side frame thickness must be at least 1.3 mm."], ["Δεν χωράει η φωλιά στο κίτρινο μέσα στην επικάλυψη. Αύξησε την «Επικάλυψη με το πάτωμα» (τουλάχιστον 10 mm) ή κλείσε το κουτάκι.", "The groove in the yellow part does not fit inside the overlap. Increase the “Overlap with the floor” (at least 10 mm) or untick the box."], ["Δεν χωράει ο νεροσταλάκτης στο γκρι μέσα στην επικάλυψη. Αύξησε την «Επικάλυψη με το πάτωμα».", "The drip edge on the gray part does not fit inside the overlap. Increase the “Overlap with the floor”."], ["Δεν υπάρχει ακόμα project.", "There is no project yet."], ["Συμπλήρωσε μήκος, ύψος, ανάβαση και ένα τουλάχιστον κείμενο με ύψος.", "Fill in the length, height, rise and at least one text with a height."], ["Λογότυπο", "Logo"], ["Προσοχή: οι γραμμές με τα περιθώρια πιάνουν ", "Warning: the lines with their margins take up "], [" cm, περισσότερα από το ύψος του πίνακα.", " cm, more than the sign height."], ["Δεν έγινε η προεπισκόπηση: ", "The preview was not made: "], ["λείπουν δικά σου σημάδια για: ", "your own marks are missing for: "], [" (θα μπουν αυτόματα)", " (they will be placed automatically)"], ["όλα τα γράμματα έχουν δικά σου σημάδια", "all letters have your own marks"], ["Το project έχει τώρα τα γράμματα της ", "The project now has the letters of the "], [" γραμμής (", " line ("], [") στα ", ") at "], [" cm. Πάτα «Επεξεργασία σημείων» πάνω από την προεπισκόπηση και διόρθωσε τα σημάδια.", " cm. Click “Edit points” above the preview and correct the marks."], ["Λογότυπο: ", "Logo: "], [". Ρύθμισε ύψος και θέση παρακάτω.", ". Set the height and position below."], ["Δεν έχεις φορτώσει λογότυπο.", "You haven't loaded a logo."], ["Φόρτωσε πρώτα το λογότυπο.", "Load the logo first."], ["Το project έχει τώρα το λογότυπο στα ", "The project now has the logo at "], [" cm (κάθε σχήμα είναι ένα κομμάτι). Πάτα «Επεξεργασία σημείων» και διόρθωσε στηρίγματα, LED κ.λπ.", " cm (each shape is one piece). Click “Edit points” and correct mounts, LEDs, etc."], ["Η λήψη δεν είναι διαθέσιμη σε αυτή την προβολή.", "Download is not available in this view."], ["Δημιουργία όλων των γραμμάτων… (μπορεί να πάρει λίγο)", "Creating all the letters… (this may take a moment)"], [" κομμάτια, ύψος ", " pieces, height "], [" (λογότυπο)", " (logo)"], ["Όλη η πινακίδα", "Whole sign"], ["Φάκελοι:", "Folders:"], ["Κάθε αρχείο ξεκινά με τον αριθμό της γραμμής και του γράμματος, π.χ. 1-03_… είναι το 3ο γράμμα της 1ης γραμμής.", "Each file starts with the line and letter number, e.g. 1-03_… is the 3rd letter of line 1."], ["Οι ίδιοι αριθμοί υπάρχουν στο PDF χωροθέτησης (xorothetisi-1-1-", "The same numbers are in the layout PDF (xorothetisi-1-1-"], [".pdf), στον πίνακα θέσεων και πάνω στα γράμματα.", ".pdf), in the positions table and on the letters."], ["Τύπωσε το PDF σε 100%, ένωσε τα φύλλα και τοποθέτησε τα γράμματα πάνω του.", "Print the PDF at 100%, join the sheets and place the letters on it."], ["Τα στηρίγματα είναι αυτά που έχεις διορθώσει στο editor ανά γράμμα και ανά ύψος, και αυτόματα όπου δεν έχεις διορθώσει.", "The mounts are the ones you corrected in the editor per letter and per height, and automatic where you haven't corrected them."], ["Οι μπάλες, οι υποδοχές, οι καβίλιες και οι στηρίξεις LED ΔΕΝ είναι σε αυτό το ZIP: βγαίνουν όλες μαζί από το κουμπί «Λήψη στηριγμάτων όλης της πινακίδας».", "The balls, sockets, dowel pins and LED mounts are NOT in this ZIP: they all come together from the “Download all sign fixings” button."], ["Έτοιμο το ZIP με όλη την πινακίδα: ", "The ZIP with the whole sign is ready: "], ["Δεν έγινε η λήψη: ", "The download failed: "], ["μπάλες", "balls"], ["υποδοχές", "sockets"], ["καβίλιες", "dowel pins"], ["στηρίξεις LED με κούμπωμα", "snap-in LED mounts"], ["στηρίξεις LED με κόλλα", "glue-on LED mounts"], ["Μέτρημα στηριγμάτων σε όλη την πινακίδα… (μπορεί να πάρει λίγο)", "Counting the mounts for the whole sign… (this may take a moment)"], [": χρειάζονται ", ": need "], [" έξτρα = ", " spare = "], [" πλάκα", " plate"], [" πλάκες", " plates"], [" εκτύπωσης, έως ", " to print, up to "], [" ανά πλάκα)", " per plate)"], ["Δεν βρέθηκαν στηρίγματα για αυτή την πινακίδα με τις τωρινές ρυθμίσεις (Στήριξη: μπάλα + υποδοχή, ή στηρίξεις LED).", "No mounts were found for this sign with the current settings (Mounting: ball + socket, or LED mounts)."], ["Στηρίγματα όλης της πινακίδας", "Mounts for the whole sign"], ["Σύνολα (όλες οι γραμμές", "Totals (all lines"], [" και το λογότυπο", " and the logo"], ["Κάθε αρχείο έχει στο όνομα τον αριθμό κομματιών που περιέχει (_x30 = 30 κομμάτια πάνω στην πλάκα).", "Each file has in its name the number of pieces it contains (_x30 = 30 pieces on the plate)."], ["Τα κομμάτια είναι ίδια για όλα τα γράμματα, γι' αυτό τυπώνονται ξεχωριστά από τα γράμματα.", "The pieces are the same for all letters, so they are printed separately from the letters."], ["Τα κομμάτια είναι ίδια για όλα τα γράμματα, γι\\u0027 αυτό τυπώνονται ξεχωριστά από τα γράμματα.", "The pieces are the same for all letters, so they are printed separately from the letters."], ["Οι καβίλιες τυπώνονται ξαπλωμένες. Τύπωσε πρώτα 1 μπάλα, 1 υποδοχή και 1 καβίλια για δοκιμή.", "The dowel pins are printed lying down. Print 1 ball, 1 socket and 1 dowel pin first as a test."], ["Έτοιμο το ZIP στηριγμάτων. ", "The mounts ZIP is ready. "], ["Το Στυλ 4 (αδιάβροχο κέλυφος) δεν έχει plexi, άρα δεν υπάρχουν DXF για κοπή. Τα DXF βγαίνουν στα Στυλ 2 και 3.", "Style 4 (waterproof shell) has no plexi, so there are no DXF files to cut. DXF files are available for Styles 2 and 3."], ["Δημιουργία DXF…", "Creating DXF…"], [" τεμάχια   περίπου ", " pieces   about "], [" mm   (γράμματα ", " mm   (letters "], ["Δεν βρέθηκε plexi σε κανένα κομμάτι. Έλεγξε ότι το plexi είναι ενεργό στις ρυθμίσεις Πρόσοψης.", "No plexi was found in any piece. Check that plexi is enabled in the Face settings."], ["Αρχεία DXF για κοπή plexi με laser", "DXF files for laser-cutting plexi"], ["Μονάδες: mm. Κάθε αρχείο έχει κλειστά περιγράμματα στο layer CUT, με αρχή στην κάτω αριστερή γωνία του κομματιού.", "Units: mm. Each file has closed outlines on the CUT layer, with the origin at the bottom-left corner of the piece."], ["Οι τρύπες (π.χ. στο Α, στο Ο) κόβονται πρώτες και μετά το εξωτερικό περίγραμμα.", "Holes (e.g. in the A, in the O) are cut first, then the outer outline."], ["Το όνομα έχει το πλήθος τεμαχίων: π.χ. A_x3.dxf σημαίνει ότι χρειάζονται 3 ίδια κομμάτια.", "The name contains the piece count: e.g. A_x3.dxf means you need 3 identical pieces."], [" mm. Το περίγραμμα είναι το ακριβές σχήμα που μπαίνει στο γράμμα, με την ανοχή που έχει οριστεί στην εφαρμογή, οπότε μη ζητήσεις επιπλέον περιθώριο. Αν ο κόφτης προσθέτει δικό του κενό για το πλάτος της δέσμης (kerf), ενημέρωσέ τον.", " mm. The outline is the exact shape that goes into the letter, with the tolerance set in the app, so do not ask for extra margin. If the cutter adds its own gap for the beam width (kerf), let them know."], ["Το DXF δεν περιέχει μονάδες: πες του ότι είναι σε mm και έλεγξε ένα γράμμα με τις διαστάσεις που ξέρεις.", "The DXF contains no units: tell the cutter it is in mm and check one letter against dimensions you know."], ["Έτοιμο: ", "Ready: "], [" αρχεία DXF σε ένα ZIP, με το πλήθος τεμαχίων στο όνομα του καθενός.", " DXF files in one ZIP, with the piece count in each name."], ["γραμμή ", "line "], [" φύλλα ", " sheets "], [" + επισκόπηση + πίνακας θέσεων. Ακτίνα αψίδας ", " + overview + positions table. Arch radius "], [" mm, κλίση στα άκρα ", " mm, slope at the ends "], [" Αυτόματα σημάδια (δεν τα έχεις διορθώσει στο ύψος της γραμμής): ", " Automatic marks (you haven't corrected them at the line height): "], [" Όλα τα στηρίγματα είναι τα δικά σου.", " All mounts are your own."], ["Δεν έγινε η χωροθέτηση: ", "The layout was not made: "], [" Το γκρι πάτωμα έχει εσωτερικό νεροσταλάκτη ", " The gray floor has an inner drip edge "], [" mm γύρω από το τοίχωμα, που καλύπτεται από το πλαίσιο.", " mm around the wall, covered by the frame."], [" Το πλαίσιο έχει από πάνω του αυλάκωση και προεξοχή. Τυπώνονται χωρίς support.", " The frame has a groove and a ridge on top. They print without support."], ["Μπάλα + υποδοχή: οι μπάλες (_mpales) τυπώνονται ξεχωριστά και κολλιούνται στην πίσω όψη της πλάκας με καβίλια (_kavilies). Η καβίλια είναι ένας μικρός κύλινδρος ", "Ball + socket: the balls (_mpales) are printed separately and glued to the back of the plate with a dowel pin (_kavilies). The dowel pin is a small cylinder "], [" mm, μήκους ", " mm, length "], [" mm. Μπαίνει από μέσα, από την ίσια τρύπα της πλάκας (", " mm. It goes in from inside, through the straight hole of the plate ("], [" mm, χωρίς κώνο), και πάει στην τρύπα του κέντρου της μπάλας. Η κεφαλή της έχει δύο αυτιά που ακουμπούν στην πλάκα και δεν την αφήνουν να πάει παραπάνω ή να τραβηχτεί προς τα πίσω. Βάλε λίγη κόλλα και πίεσέ την μέχρι να κάτσουν τα αυτιά πάνω στην πλάκα. Οι καβίλιες τυπώνονται ξαπλωμένες στο πλάι, ώστε οι στρώσεις να τρέχουν κατά μήκος τους και να αντέχουν στο κόψιμο. Η μύτη της μπάλας σημαδεύει το κέντρο στον τοίχο. Εκεί βιδώνεις τις υποδοχές (_ypodoxes) και η μπάλα κουμπώνει μέσα τους. Τύπωσε πρώτα μία μπάλα, μία υποδοχή και μία καβίλια για δοκιμή. Αν η καβίλια μπαίνει πολύ χαλαρά, μείωσε την ανοχή· αν δεν μπαίνει, αύξησέ την.", " mm, no cone), and goes into the hole at the center of the ball. Its head has two ears that rest on the plate and stop it from going further or being pulled back. Add a little glue and press it until the ears sit on the plate. The dowel pins are printed lying on their side, so the layers run along them and resist shearing. The tip of the ball marks the center on the wall. That is where you screw the sockets (_ypodoxes), and the ball snaps into them. Print one ball, one socket and one dowel pin first as a test. If the dowel pin goes in too loosely, reduce the clearance; if it does not go in, increase it."], ["Στηρίξεις LED (_stirixeis_led_kolla): μικρά κανάλια για ταινία ", "LED mounts (_stirixeis_led_kolla): small channels for a strip "], [" mm. Δεν έχουν πόδια ούτε τρύπες στην πλάκα: τις κολλάς πάνω στην πλάκα όπου θες. Είναι τυπωμένες ξαπλωμένες στο πλάι.", " mm. They have no legs or holes in the plate: you glue them onto the plate wherever you want. They are printed lying on their side."], ["Τρύπα καλωδίου ", "Cable hole "], [" mm: ανοιγμένη στην πλάκα, κάτω στο γράμμα.", " mm: cut in the plate, at the bottom of the letter."], [" mm: φαίνεται μόνο ως ένδειξη· άνοιξέ την με τρυπάνι στην πλάκα.", " mm: shown only as a marker; open it with a drill in the plate."], ["Πάτα μέσα στο γράμμα για να βάλεις ή να μετακινήσεις την τρύπα καλωδίου (μία ανά γράμμα). Με «Σβήσιμο» την αφαιρείς.", "Click inside the letter to place or move the cable hole (one per letter). Use “Delete” to remove it."], ["Η τρύπα καλωδίου είναι κλειστή. Άνοιξέ την από το μενού «Πρόσοψη».", "The cable hole is turned off. Enable it from the “Face” menu."], ["Πάτα μέσα στο γράμμα για να βάλεις την τρύπα καλωδίου.", "Click inside the letter to place the cable hole."], ["Ακύρωση", "Cancel"], ["Να διαγραφεί το «", "Delete “"], ["Δεν διαγράφηκε.", "Not deleted."], ["Διαγράφηκε το «", "Deleted “"], ["Η διαγραφή δεν αποθηκεύτηκε σε αυτόν τον browser.", "The deletion was not saved in this browser."], ["Υπάρχει ήδη project με όνομα «", "A project with the name “"], ["Αντικατάσταση", "Replace"], ["Δεν αποθηκεύτηκε. Άλλαξε το όνομα ή πάτα Αντικατάσταση.", "Not saved. Change the name or click Replace."], ["«", "“"], ["»", "”"]);
   PAIRS.push(["πάνω γραμμής", "top line"], ["κάτω γραμμής", "bottom line"], ["»;", "”?"], ["». Να αντικατασταθεί;", "”. Replace it?"]);
+  PAIRS.push(["Στυλ 1: ολόκληρο καπάκι", "Style 1: full cap"], ["Βάση, τοιχώματα και συμπαγές καπάκι.", "Base, walls and a solid cap."], ["Στυλ 2: πλαίσιο με plexi", "Style 2: frame with plexi"], ["Πλαίσιο με φρύδι από πάνω και plexi μέσα.", "A frame with a brow on top and plexi inside."], ["Στυλ 3: πάτωμα + πλαίσιο + plexi", "Style 3: floor + frame + plexi"], ["Δίσκος με τοιχώματα και πλαίσιο που κουμπώνει από πάνω.", "A tray with walls and a frame that snaps on from above."], ["Στυλ 4: αδιάβροχο κέλυφος", "Style 4: waterproof shell"], ["Πρόσοψη και τοιχώματα ένα κομμάτι, η πλάκα μπαίνει από πίσω.", "Face and walls in one piece; the plate goes in from behind."], ["Σωληνάκι (αποστάτης)", "Tube (spacer)"], ["Τρύπες με σωληνάκι που κρατά το γράμμα μακριά από τον τοίχο.", "Holes with a tube that keeps the letter away from the wall."], ["Μπάλα + υποδοχή", "Ball + socket"], ["Η μπάλα κουμπώνει στην υποδοχή του τοίχου, με καβίλια.", "The ball snaps into the wall socket, with a dowel pin."], ["Τρύπες στη βάση", "Holes in the base"], ["Βιδώνεται απευθείας στον τοίχο, χωρίς απόσταση.", "Screws directly onto the wall, with no gap."], ["Χωρίς τρύπες", "No holes"], ["Κολλάς το γράμμα στον τοίχο.", "You glue the letter to the wall."], ["Πόσο στενεύει το άνοιγμα της υποδοχής σε σχέση με τη μπάλα. Μεγαλύτερο = κρατά πιο σφιχτά, αλλά μπαίνει δύσκολα και τα δάχτυλα κουράζονται. Μικρότερο = μπαίνει εύκολα, αλλά μπορεί να βγαίνει μόνο του.", "How much the socket opening is narrower than the ball. Larger = holds tighter, but goes in with difficulty and the fingers get stressed. Smaller = goes in easily, but may come out by itself."], ["Πόσο ψηλά κατεβαίνουν οι 4 σχισμές της υποδοχής. Πιο κοντές = πιο σκληρά δάχτυλα και πιο σφιχτό κούμπωμα. Δεν μπορεί να γίνει μικρότερο από το χείλος που πατά πάνω στη μπάλα.", "How far down the 4 slots of the socket go. Shorter = stiffer fingers and a tighter snap. It cannot be shorter than the lip that presses on the ball."], ["Το πάχος του τοιχώματος της υποδοχής. Πιο λεπτό = πιο μαλακό και πιο εύκολο κούμπωμα. Πιο χοντρό = πιο σκληρό.", "The wall thickness of the socket. Thinner = softer and an easier snap. Thicker = stiffer."], ["Το κενό γύρω από την καβίλια στις τρύπες της μπάλας και της πλάκας. 0 = πολύ σφιχτό, μπορεί να μην μπαίνει. Δοκίμασε πρώτα ένα δείγμα στο υλικό που θα χρησιμοποιήσεις.", "The gap around the dowel pin in the holes of the ball and the plate. 0 = very tight, it may not go in. Test a sample in the material you will use first."], ["Πόσα clips μπαίνουν σε κάθε γράμμα. Περισσότερα = πιο σταθερό κλείσιμο της βάσης στα τοιχώματα.", "How many clips go in each letter. More = a more stable closing of the base onto the walls."], ["Το πλάτος κάθε clip κατά μήκος του τοιχώματος. Πιο στενό = χωράει σε απότομες στροφές χωρίς να βγαίνει έξω, αλλά κρατά λίγο λιγότερο.", "The width of each clip along the wall. Narrower = fits tight curves without sticking out, but holds a little less."], ["Πόσα mm απέχει η πλάκα από τον τοίχο. Περισσότερα = περισσότερος χώρος για φως και σκιά πίσω από το γράμμα, αλλά μεγαλύτερος μοχλός πάνω στα στηρίγματα.", "How many mm the plate is from the wall. More = more room for light and shadow behind the letter, but a longer lever on the mounts."], ["Πόσο κάθεται το πλαίσιο πάνω στο πάτωμα. Μεγαλύτερη επικάλυψη = πιο σταθερό και καλύτερη προστασία από νερό.", "How far the frame sits over the floor. A larger overlap = more stable and better protection from water."], ["Το φρύδι είναι το ορατό χείλος του πλαισίου γύρω από το plexi. Πιο φαρδύ = πιο έντονο πλαίσιο, πιο λεπτό = περισσότερο plexi να φαίνεται.", "The brow is the visible lip of the frame around the plexi. Wider = a bolder frame, thinner = more plexi showing."], ["Το πάχος του πλαϊνού τοιχώματος του πλαισίου. Πιο χοντρό = πιο στέρεο, αλλά χρειάζεται περισσότερο χώρο.", "The thickness of the frame's side wall. Thicker = sturdier, but needs more room."], ["Μικρές τρύπες στα χαμηλά σημεία για να φεύγει το νερό. «Μόνο ένδειξη» τις δείχνει με κόκκινο και τις ανοίγεις εσύ με τρυπάνι. Με «Να ανοίγονται στην εκτύπωση» βγαίνουν έτοιμες.", "Small holes at the low points so the water can drain. “Marker only” shows them in red and you open them with a drill. With “Cut open in the print” they come out ready."], ["Η τρύπα απ’ όπου βγαίνει το καλώδιο των LED, κάτω στο γράμμα. Λειτουργεί όπως οι τρύπες αποστράγγισης: μόνο ένδειξη ή ανοιγμένη στην εκτύπωση.", "The hole where the LED cable comes out, at the bottom of the letter. It works like the drain holes: marker only, or cut open in the print."], ["Βοήθεια", "Help"], ["Μπάλες", "Balls"], ["Τυπώνονται ξεχωριστά και κολλιούνται στην πλάκα.", "Printed separately and glued to the plate."], ["Υποδοχές", "Sockets"], ["Βιδώνονται στον τοίχο, η μπάλα κουμπώνει μέσα τους.", "Screwed to the wall; the ball snaps into them."], ["Καβίλιες", "Dowel pins"], ["Ενώνουν τη μπάλα με την πλάκα.", "They join the ball to the plate."], ["Αποστάτες (σωληνάκια)", "Spacers (tubes)"], ["Τυπώνονται ξεχωριστά και μπαίνουν σαν προσθήκη.", "Printed separately and added on."], ["Είναι κομμάτι της βάσης.", "Part of the base."], ["Για βίδες στον τοίχο. Δεν τυπώνεται κάτι επιπλέον.", "For screws into the wall. Nothing extra is printed."], ["Καμία στήριξη", "No mounting"], ["Θα κολλήσεις το γράμμα στον τοίχο.", "You will glue the letter to the wall."], ["Είναι μέρος του ίδιου κομματιού με τη βάση.", "Part of the same piece as the base."], ["Τι θα τυπώσεις με αυτή τη στήριξη", "What you will print with this mounting"], ["Μετρημένα για τα γράμματα του τρέχοντος project.", "Counted for the letters of the current project."]);
+  PAIRS.push(["Κούμπωμα", "Snap-in"], ["Η στήριξη κουμπώνει σε υποδοχή στην πλάκα.", "The mount snaps into a slot in the plate."], ["Κόλλα", "Glue"], ["Κολλιέται πάνω στην πλάκα, χωρίς τρύπες.", "Glued onto the plate, with no holes."], ["Χείλος καπακιού", "Cap lip"], ["Τομή γράμματος από το πλάι. Το ύψος γράμματος είναι το μέγεθός του πάνω στον τοίχο.", "Cross-section of a letter from the side. The letter height is its size on the wall."], ["Λεπτό", "Thin"], ["Κανονικό", "Normal"], ["Το bold φουσκώνει το περίγραμμα του γράμματος. Το ύψος μένει ίδιο.", "Bold thickens the outline of the letter. The height stays the same."], ["Επίπεδη", "Flat"], ["Στέγη", "Roof"], ["Τρεις τρόποι για την πάνω επιφάνεια. Η στέγη και η κλίση ρυθμίζονται παρακάτω.", "Three ways to shape the top surface. The roof and the tilt are set below."], ["Πινακίδα", "Sign"], ["Τα γράμματα και το λογότυπο πάνω στην αψίδα, PDF για τον τοίχο και λήψεις για όλη την πινακίδα.", "The letters and the logo on the arch, a PDF for the wall and downloads for the whole sign."], ["Μέγεθος και γραμμές", "Size and lines"], ["Προεπισκόπηση και λήψεις", "Preview and downloads"], ["Αψίδα, λογότυπο, PDF", "Arch, logo, PDF"], ["Αν η εικόνα έχει λευκό φόντο, το πρόγραμμα το αγνοεί ώστε να μη γίνει ορθογώνιο κομμάτι. Κλείστο μόνο αν το λευκό είναι μέρος του σχεδίου.", "If the image has a white background, the program ignores it so it does not become a rectangular piece. Turn it off only if the white is part of the design."], ["Η απόσταση ανάμεσα στα γράμματα του κειμένου.", "The distance between the letters of the text."], ["Φουσκώνει το περίγραμμα του γράμματος (ή το λεπταίνει, με αρνητική τιμή). Βοηθά όταν η γραμματοσειρά είναι πολύ λεπτή για εκτύπωση. Σε εικόνα με κομμάτια κοντά μεταξύ τους μπορεί να τα ενώσει.", "Thickens the outline of the letter (or thins it, with a negative value). It helps when the font is too thin to print. In an image with pieces close together it may join them."], ["Το πλάτος των γραμμάτων: 100% είναι το κανονικό. Πάνω από 100 τα πλαταίνει, κάτω από 100 τα στενεύει.", "The width of the letters: 100% is normal. Above 100 it widens them, below 100 it narrows them."], ["Πόσο ομαλές βγαίνουν οι καμπύλες. Αν βλέπεις γωνίες στις στροφές, ανέβασέ το.", "How smooth the curves come out. If you see corners in the bends, raise it."], ["Το συνολικό βάθος του γράμματος από την πλάκα ως το καπάκι. Πρέπει να χωράει την ταινία LED και τη στήριξή της.", "The total depth of the letter from the plate to the cap. It must fit the LED strip and its mount."], ["Το πάχος της πλάκας στο πίσω μέρος. Πιο χοντρή = πιο στερεή, αλλά περισσότερο υλικό και χρόνος.", "The thickness of the plate at the back. Thicker = sturdier, but more material and time."], ["Το πάχος των τοιχωμάτων γύρω από το γράμμα. Πιο χοντρά = πιο στερεά, αλλά περισσότερο υλικό.", "The thickness of the walls around the letter. Thicker = sturdier, but more material."], ["Το πάχος του καπακιού (πρόσοψης). Αν το καπάκι είναι από ημιδιάφανο υλικό, πιο λεπτό = περισσότερο φως.", "The thickness of the cap (face). If the cap is made of a translucent material, thinner = more light."], ["Το κενό ανάμεσα σε κομμάτια που εφαρμόζουν μεταξύ τους (π.χ. καπάκι και τοιχώματα). Αν εφαρμόζουν πολύ χαλαρά ή δεν μπαίνουν, άλλαξέ το λίγο. Εξαρτάται από τον εκτυπωτή και το υλικό.", "The gap between pieces that fit together (e.g. cap and walls). If they fit too loosely or do not go in, change it a little. It depends on the printer and the material."], ["Το χείλος είναι μια λεπτή προεξοχή του καπακιού που μπαίνει μέσα στα τοιχώματα, ώστε το καπάκι να κάθεται στη θέση του και να μη γλιστρά.", "The lip is a thin projection of the cap that goes inside the walls, so the cap stays in place and does not slide."], ["Πόσο βαθιά μπαίνει το χείλος μέσα στα τοιχώματα.", "How deep the lip goes inside the walls."], ["Το πάχος του χείλους. Πιο λεπτό = πιο εύκολο να μπει, πιο χοντρό = πιο στέρεο.", "The thickness of the lip. Thinner = easier to fit, thicker = sturdier."], ["Η πάνω επιφάνεια ανεβαίνει σαν στέγη στη μέση κάθε γραμμής, ώστε το νερό να τρέχει στα πλάγια.", "The top surface rises like a roof in the middle of each line, so the water runs off the sides."], ["Πόσο απότομη είναι η στέγη. Μεγαλύτερη γωνία = πιο απότομη.", "How steep the roof is. A larger angle = steeper."], ["Το μέγιστο ύψος που μπορεί να φτάσει ο κορφιάς της στέγης.", "The maximum height the ridge of the roof can reach."], ["Γέρνει την πάνω επιφάνεια προς μία κατεύθυνση, π.χ. για να φεύγει το νερό.", "Tilts the top surface in one direction, e.g. so the water drains away."], ["Προς ποια πλευρά είναι το ψηλότερο σημείο της κλίσης.", "Which side the highest point of the tilt is on."], ["Το πλάτος της ταινίας LED που έχεις αγοράσει (συνήθως 8 ή 10 mm). Η στήριξη φτιάχνεται για αυτό το πλάτος.", "The width of the LED strip you bought (usually 8 or 10 mm). The mount is made for this width."], ["Το πάχος της ταινίας LED μαζί με την κόλλα της, για να χωράει στο κανάλι της στήριξης.", "The thickness of the LED strip including its adhesive, so it fits in the channel of the mount."], ["Η απόσταση ανάμεσα στις στηρίξεις κατά μήκος της ταινίας. Μικρότερη = περισσότερες στηρίξεις και πιο σταθερή ταινία.", "The distance between the mounts along the strip. Smaller = more mounts and a steadier strip."], ["Το μήκος κάθε στήριξης κατά μήκος της ταινίας. Πιο κοντό = λιγότερο υλικό και χωράει σε στενά γράμματα, αλλά κρατά λιγότερο.", "The length of each mount along the strip. Shorter = less material and fits narrow letters, but holds less."], ["Το πλάτος του τραπεζιού του εκτυπωτή σου, για να ελέγχεται αν χωράνε τα κομμάτια.", "The width of your printer bed, to check whether the pieces fit."], ["Το βάθος του τραπεζιού του εκτυπωτή σου, για να ελέγχεται αν χωράνε τα κομμάτια.", "The depth of your printer bed, to check whether the pieces fit."], ["Πόσο ψηλότερα είναι το κέντρο της αψίδας από τις δύο γωνίες της πινακίδας.", "How much higher the center of the arch is than the two corners of the sign."], ["Επιπλέον κομμάτια στηριγμάτων για σπασίματα και δοκιμές, ανά τύπο.", "Extra mount pieces for breakage and tests, per type."], ["Τι θα τυπώσεις για τα LED", "What you will print for the LEDs"], ["Στηρίξεις LED με κούμπωμα", "Snap-in LED mounts"], ["Τυπώνονται ξεχωριστά και κουμπώνουν σε υποδοχές της πλάκας.", "Printed separately and snap into slots in the plate."], ["Στηρίξεις LED με κόλλα", "Glue-on LED mounts"], ["Τυπώνονται ξεχωριστά και κολλιούνται στην πλάκα.", "Printed separately and glued to the plate."], ["Δεν χωράει καμία με τις τωρινές ρυθμίσεις.", "None fits with the current settings."]);
+  PAIRS.push(["Βάθος πάνω γραμμής", "Top line depth"], ["Βάθος κάτω γραμμής", "Bottom line depth"], ["Βάθος λογοτύπου", "Logo depth"], ["όπως στο project", "same as the project"], ["Το πάχος (συνολικό βάθος) των γραμμάτων αυτής της γραμμής. Αν το αφήσεις κενό, παίρνει το βάθος από τις Διαστάσεις.", "The thickness (total depth) of the letters of this line. If you leave it empty, it takes the depth from Dimensions."], ["Το πάχος (συνολικό βάθος) του λογοτύπου. Αν το αφήσεις κενό, παίρνει το βάθος από τις Διαστάσεις.", "The thickness (total depth) of the logo. If you leave it empty, it takes the depth from Dimensions."], [" cm, βάθος ", " cm, depth "], ["Το βάθος ", "The depth "], [" mm είναι πολύ μικρό για τα πάχη που έχεις ορίσει. Αύξησέ το ή μίκρυνε βάση και καπάκι.", " mm is too small for the thicknesses you set. Increase it or make the base and cap thinner."]);
+  PAIRS.push(["Πάχος τοιχωμάτων στήριξης", "Mount wall thickness"], ["Το πάχος του πατώματος και των δύο πλαϊνών τοιχωμάτων της στήριξης LED (τα χείλη πάνω από την ταινία μένουν 1 mm). Πιο λεπτό = χαμηλότερη και στενότερη στήριξη. Για ακροφύσιο 0,4 mm το 1,2 βγαίνει συνήθως πιο καθαρό από το 1,0.", "The thickness of the floor and the two side walls of the LED mount (the lips over the strip stay 1 mm). Thinner = a lower and narrower mount. With a 0.4 mm nozzle, 1.2 usually prints cleaner than 1.0."]);
   PAIRS.sort(function(a, b){ return b[0].length - a[0].length; });
   var MAP = new Map(PAIRS);
   function esc(t){ return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
