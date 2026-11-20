@@ -378,8 +378,17 @@ td.lab{font-family:var(--font-head);font-weight:700;font-size:18px}
         <div class="field"><label for="ballWall">Πάχος τοιχώματος υποδοχής (πιο λεπτό = πιο μαλακό)</label><div class="unit"><input type="number" id="ballWall" value="1.2" step="0.1" min="0.6" max="3"><i>mm</i></div></div>
         <div class="field"><label for="ballGrip">Σφίξιμο κουμπώματος (πιο μικρό = πιο εύκολο)</label><div class="unit"><input type="number" id="ballGrip" value="0.5" step="0.1" min="0.2" max="1.2"><i>mm</i></div></div>
         <div class="field"><label for="slotH">Ύψος σχισίματος (πιο κοντό = πιο σφιχτό)</label><div class="unit"><input type="number" id="slotH" value="8" step="0.5" min="2" max="60"><i>mm</i></div></div>
+        <div class="field"><label for="slotN">Αριθμός κοψιμάτων υποδοχής</label><div class="unit"><select id="slotN"><option value="4">4</option><option value="6" selected>6</option><option value="8">8</option></select></div></div>
+        <div class="field"><label for="reliefD">Στρογγυλό τρυπάκι στη βάση κάθε κοψίματος (0 = όχι)</label><div class="unit"><input type="number" id="reliefD" value="2" step="0.5" min="0" max="4"><i>mm</i></div></div>
+        <label class="check" style="grid-column:1/-1"><input type="checkbox" id="sockLay" checked><span>Υποδοχές γερμένες στο αρχείο εκτύπωσης (χωρίς support, πιο γερά δάχτυλα)</span></label>
+        <div class="field"><label for="sockTilt">Κλίση υποδοχής στην εκτύπωση (0 = ξαπλωμένη, 90 = όρθια)</label><div class="unit"><input type="number" id="sockTilt" value="45" step="5" min="0" max="90"><i>°</i></div></div>
+        <label class="check" style="grid-column:1/-1"><input type="checkbox" id="ringOn" checked><span>Κολάρο κλειδώματος (δαχτυλίδι που σφίγγει τα δάχτυλα της υποδοχής)</span></label>
+        <div class="field"><label for="ringLen">Μήκος κολάρου (5–8)</label><div class="unit"><input type="number" id="ringLen" value="6" step="0.5" min="5" max="8"><i>mm</i></div></div>
+        <div class="field"><label for="ringWall">Πάχος τοιχώματος κολάρου</label><div class="unit"><input type="number" id="ringWall" value="1.2" step="0.1" min="0.8" max="2.5"><i>mm</i></div></div>
+        <div class="field"><label for="ringTol">Ανοχή κολάρου γύρω από την υποδοχή</label><div class="unit"><input type="number" id="ringTol" value="0.25" step="0.05" min="0.1" max="0.6"><i>mm</i></div></div>
       </div>
       <p id="ballNote" class="hint"></p>
+      <div id="ballTestRow"><div class="field"><label for="ballTestWhat">Δοκιμαστική λήψη: τι να κατέβει</label><select id="ballTestWhat"><option value="all" selected>Όλα: μπάλα + υποδοχή + καβίλια</option><option value="mpales">Μόνο η μπάλα</option><option value="ypodoxes">Μόνο η υποδοχή</option><option value="kavilies">Μόνο η καβίλια</option><option value="kolara">Μόνο το κολάρο κλειδώματος</option></select></div><button type="button" class="btn" id="ballTest">Λήψη δοκιμής (ένα STL)</button><p id="ballTestMsg" class="hint" aria-live="polite"></p></div>
       <details class="hintd"><summary>Πληροφορίες</summary><p class="hint">Η βίδα μπαίνει από μέσα, πριν κουμπώσεις τα τοιχώματα και το καπάκι. Από προεπιλογή ο αποστάτης είναι κομμάτι της βάσης. Με «Αποστάτες ξεχωριστά» η βάση βγαίνει χωρίς σωληνάκια και οι αποστάτες βγαίνουν σε δικό τους αρχείο (_apostates), όρθιοι και δίπλα δίπλα. Τους βάζεις ανάμεσα στον τοίχο και τη βάση και τους σφίγγει η βίδα. Στο Στυλ 3 οι αποστάτες βγαίνουν πάντα ξεχωριστά.</p></details>
     </div>
   </section>
@@ -1289,7 +1298,7 @@ function readParams(){
     clipsOn: $('clipsOn').checked,
     recess: num('recess', 3, 6), sLW: num('sLW', 1, 3), sLT: num('sLT', 1, 2), dripOn: $('dripOn').checked, dripH: num('dripH', 2, 5), drainMode: $('drainMode').value, clipN: Math.round(num('clipN', 2, 4)), clipW: Math.min(12, num('clipW', 3, 8)),
     mountMode: $('mountMode').value, mountN: Math.round(num('mountN', 1, 2)), holeD: num('holeD', 2, 5),
-    spacerLen: num('spacerLen', 3, 15), spacerOD: num('spacerOD', 8, 14), spacerSep: $('spacerSep').checked, ballD: num('ballD', 8, 10), pilotD: num('pilotD', 2, 3), discH: Math.min(4, num('discH', 1, 2)), discD: num('discD', 0, 0), pinD: Math.min(8, num('pinD', 2, 5)), pinTol: Math.min(0.4, num('pinTol', 0, 0.1)), pinIn: Math.min(8, num('pinIn', 3, 5)), wallScrewD: num('wallScrewD', 3, 4.5), ballWall: num('ballWall', 0.6, 1.2), ballGrip: num('ballGrip', 0.2, 0.5), slotH: num('slotH', 2, 8),
+    spacerLen: num('spacerLen', 3, 15), spacerOD: num('spacerOD', 8, 14), spacerSep: $('spacerSep').checked, ballD: num('ballD', 8, 10), pilotD: num('pilotD', 2, 3), discH: Math.min(4, num('discH', 1, 2)), discD: num('discD', 0, 0), pinD: Math.min(8, num('pinD', 2, 5)), pinTol: Math.min(0.4, num('pinTol', 0, 0.1)), pinIn: Math.min(8, num('pinIn', 3, 5)), wallScrewD: num('wallScrewD', 3, 4.5), ballWall: num('ballWall', 0.6, 1.2), ballGrip: num('ballGrip', 0.2, 0.5), slotH: num('slotH', 2, 8), slotN: ([4, 6, 8].indexOf(parseInt($('slotN').value, 10)) >= 0 ? parseInt($('slotN').value, 10) : 6), reliefD: Math.min(4, Math.max(0, parseFloat($('reliefD').value) || 0)), sockLay: $('sockLay').checked, ringOn: $('ringOn').checked, ringLen: Math.min(8, Math.max(5, parseFloat($('ringLen').value) || 6)), ringWall: Math.min(2.5, Math.max(0.8, parseFloat($('ringWall').value) || 1.2)), ringTol: Math.min(0.6, Math.max(0.1, parseFloat($('ringTol').value) || 0.25)), sockTilt: Math.min(90, Math.max(0, isNaN(parseFloat($('sockTilt').value)) ? 45 : parseFloat($('sockTilt').value))),
     ledOn: $('ledOn').checked, cableMode: $('cableMode').value, cableD: Math.max(3, parseFloat($('cableD').value) || 6), ledW: $('ledW').value === '8' ? 8 : 10, ledH: num('ledH', 1.5, 3.5), ledGap: num('ledGap', 15, 40), ledL: num('ledL', 6, 14), ledT: Math.min(2, num('ledT', 0.8, 1)), ledMount: ($('faceStyle').value === 'shell' && $('ledMount').value !== 'glue') ? 'snap' : 'glue', coneOn: $('coneOn').checked, coneD: num('coneD', 4, 8),
     bedW: num('bedW', 50, 256), bedH: num('bedH', 50, 256), white: $('svgWhite').checked
   };
@@ -1831,26 +1840,53 @@ function revGeom(s){
   if (s.m) g.applyMatrix4(s.m);
   return g;
 }
+/* υποδοχή: δαχτυλίδι κάτω από τα κοψίματα + N δάχτυλα. Στη βάση κάθε κοψίματος υπάρχει στρογγυλό τρυπάκι (keyhole) ώστε να μην υπάρχει οξεία γωνία.
+   Τα δάχτυλα έχουν κέντρα στις γωνίες π/2 + k·2π/N, άρα υπάρχει δάχτυλο στην κορυφή και (για ζυγό N) στον πάτο όταν η υποδοχή ξαπλώνει. */
+function sockParts(G, P, m){
+  const k = BALL, sp = sockProfile(G), N = P.slotN || 4, hsl = Math.max(k.floorT + 1.0, G.Hs - G.slotH), rm = (G.Ri + G.Ro) / 2, ws = k.slotW / 2;
+  const rk = P.reliefD > 0 ? Math.max(ws + 0.2, P.reliefD / 2) : 0, hk = hsl + rk, pitch = 2 * Math.PI / N;
+  const out = [{rev:{prof:clipPoly(sp, -1, hsl), n:48, a0:0, a1:2 * Math.PI}, m}];
+  const wAt = h => { if (!rk) return ws; const c = Math.sqrt(Math.max(0, rk * rk - (h - hk) * (h - hk))); return h < hk ? c : Math.max(c, ws); };
+  const slices = [[hsl - 0.5, hsl, 0]];
+  if (rk){ const nS = Math.max(4, Math.ceil(2 * rk / 0.3)); for (let i = 0; i < nS; i++){ const h0 = hsl + 2 * rk * i / nS, h1 = hsl + 2 * rk * (i + 1) / nS; slices.push([h0, h1, wAt((h0 + h1) / 2)]); } slices.push([hsl + 2 * rk, 1e9, ws]); }
+  else slices[0] = [hsl - 0.5, 1e9, ws];
+  for (let q = 0; q < N; q++){
+    const ca = Math.PI / 2 + (q - 0.5) * pitch, cb = ca + pitch;
+    slices.forEach(sl => {
+      const prof = clipPoly(sp, sl[0], sl[1]); if (prof.length < 3) return;
+      const wa = sl[2] / rm, a0 = ca + wa, a1 = cb - wa; if (a1 - a0 < 0.02) return;
+      out.push({rev:{prof, n:Math.max(4, Math.round((a1 - a0) * 180 / Math.PI / 5)), a0, a1}, m});
+    });
+  }
+  return out;
+}
+/* γερμένη υποδοχή: ο άξονας σηκώνεται κατά tilt μοίρες από το τραπέζι (0 = ξαπλωμένη, 90 = όρθια), το κλειστό άκρο (φλάντζα) κάτω.
+   Κέντρο του αποτυπώματος στο (xc, yc). Η χαμηλότερη γραμμή πατά στο z = 0 */
+function sockW(G, P){ const t = (P.sockTilt || 0) * Math.PI / 180; return P.sockLay ? G.Hs * Math.cos(t) + 2 * G.Ro * Math.sin(t) : 2 * G.Ro; }
+function sockLayM(G, xc, yc, tilt){
+  const t = (tilt || 0) * Math.PI / 180, c = Math.cos(t), sn = Math.sin(t), w = G.Hs * c + 2 * G.Ro * sn;
+  const mm = new THREE.Matrix4().makeBasis(new THREE.Vector3(0, 1, 0), new THREE.Vector3(-sn, 0, c), new THREE.Vector3(c, 0, sn));
+  mm.setPosition(xc - w / 2 + G.Ro * sn, yc, G.Ro * c); return mm;
+}
+/* κολάρο κλειδώματος: σωληνάκι που πέφτει απ' έξω πάνω στα δάχτυλα της υποδοχής όταν η μπάλα έχει μπει, ώστε να μη μπορούν να ανοίξουν.
+   Εσωτερική διάμετρος = εξωτερική της υποδοχής + ανοχή. Τυπώνεται όρθιο: οι στρώσεις είναι κατά τη διεύθυνση της τάσης (κύκλος) */
+function ringDims(G, P){ const ri = G.Ro + P.ringTol; return {ri, ro: ri + P.ringWall, len: P.ringLen, c: Math.min(0.3, P.ringWall / 3)}; }
+function ringProfile(G, P){ const d = ringDims(G, P); return [[d.ri + d.c, 0], [d.ro, 0], [d.ro, d.len], [d.ri + d.c, d.len], [d.ri, d.len - d.c], [d.ri, d.c]]; }
 function ballSolids(pc, P, plateZ, shell){
   const G = ballG(P, shell), k = BALL, out = {base:[], sp:[], ballFile:[], sockFile:[], pinFile:[]};
   if (!G.ok) return out;
-  const bp = ballProfile(G), sp = sockProfile(G), pp = pinProfile(G, P), hsl = Math.max(k.floorT + 1.0, G.Hs - G.slotH);
-  const cup = clipPoly(sp, -1, hsl), fing = clipPoly(sp, hsl - 0.5, 1e9);
-  const ha = (k.slotW / 2) / ((G.Ri + G.Ro) / 2);
-  const sock = m => {
-    const r = [{rev:{prof:cup, n:48, a0:0, a1:2 * Math.PI}, m}];
-    for (let q = 0; q < 4; q++){ const c = Math.PI / 4 + q * Math.PI / 2; r.push({rev:{prof:fing, n:18, a0:c + ha, a1:c + Math.PI / 2 - ha}, m}); }
-    return r;
-  };
+  const bp = ballProfile(G), pp = pinProfile(G, P);
+  const sock = m => sockParts(G, P, m);
   pc.mounts.forEach((mt, i) => {
     const mb = new THREE.Matrix4().makeBasis(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 0, -1));
     mb.setPosition(mt[0], mt[1], plateZ);
     out.base.push({rev:{prof:bp, n:56, a0:0, a1:2 * Math.PI}, m:mb, noExp:true});
     sock(new THREE.Matrix4().makeTranslation(mt[0], mt[1], plateZ - G.D)).forEach(x => out.sp.push(x));
     out.ballFile.push({rev:{prof:bp, n:56, a0:0, a1:2 * Math.PI}, m:new THREE.Matrix4().makeTranslation(i * (2 * G.Rd + 4), 0, 0)});
-    sock(new THREE.Matrix4().makeTranslation(i * (2 * G.Ro + 4), 0, 0)).forEach(x => out.sockFile.push(x));
-    const mp = new THREE.Matrix4().makeBasis(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, -1, 0), new THREE.Vector3(1, 0, 0));
-    mp.setPosition(0, i * (P.pinD + 4), P.pinD / 2);
+    sock(P.sockLay ? sockLayM(G, i * (sockW(G, P) + 4) + sockW(G, P) / 2, G.Ro, P.sockTilt) : new THREE.Matrix4().makeTranslation(i * (2 * G.Ro + 4), 0, 0)).forEach(x => out.sockFile.push(x));
+    /* η καβίλια τυπώνεται ΟΡΘΙΑ, με το κεφάλι-στοπ στο τραπέζι και τη μύτη πάνω */
+    const mp = new THREE.Matrix4().makeBasis(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 0, -1));
+    mp.setPosition(i * (P.pinD + 2 * Math.max(1.5, 0.4 * P.pinD) + 4), 0, G.pinL + PINHEAD.t);
     out.pinFile.push({rev:{prof:pp, n:40, a0:0, a1:2 * Math.PI}, m:mp});
     out.pinFile.push({pts:pinHeadPts(P), w:PINHEAD.t, m:mp.clone().multiply(new THREE.Matrix4().makeTranslation(0, 0, G.pinL + PINHEAD.t / 2))});
   });
@@ -2509,7 +2545,7 @@ async function rebuild(){
   if (isBall){ $('coneFields').style.display = 'none'; $('coneNote').textContent = ''; }
   $('spacerFields').style.display = (P.mountMode === 'spacer' || isBall) ? '' : 'none';
   $('odField').style.display = $('sepField').style.display = isBall ? 'none' : '';
-  $('ballFields').style.display = isBall ? '' : 'none';
+  $('ballFields').style.display = $('ballTestRow').style.display = isBall ? '' : 'none';
   { const G = ballG(P, P.faceStyle === 'shell'); $('ballNote').textContent = isBall ? 'Η πλάκα απέχει από τον τοίχο ' + G.D.toFixed(0) + ' mm. Η υποδοχή στον τοίχο έχει ύψος ' + G.Hs.toFixed(1) + ' mm. Οι σχισμές έχουν ύψος ' + G.slotH.toFixed(1) + ' mm' + (G.slotClamped ? ' (ελάχιστο για να λυγίζουν τα δάχτυλα· η τιμή που έβαλες ήταν μικρότερη)' : '') + ', από κάτω η υποδοχή είναι γεμάτη. Καβίλια ' + P.pinD + ' mm, μήκος ' + G.pinL.toFixed(1) + ' mm (συν κεφαλή-στοπ ' + PINHEAD.t + ' mm). Βάση μπάλας ' + (2 * G.Rd).toFixed(1) + ' mm × ' + G.dh + ' mm. Τρύπα στην πλάκα και στη μπάλα ' + (P.pinD + P.pinTol).toFixed(2) + ' mm.' + (G.wall >= 0.8 && G.wall < 1.5 ? ' Προσοχή: ο λαιμός της μπάλας έχει μόνο ' + G.wall.toFixed(1) + ' mm τοίχωμα γύρω από την τρύπα. Καλύτερα μπάλα ' + G.wallMinD + ' mm ή περισσότερο.' : '') : ''; }
   const wallH = P.depth - P.bt - P.ct * csOf(P);
   try {
@@ -2663,6 +2699,16 @@ function buildLayoutPdf(cfg, lines, paper){
         out.push(path([[q[0] - 4, q[1]], [q[0] + 4, q[1]]])); out.push(path([[q[0], q[1] - 4], [q[0], q[1] + 4]]));
         boxes.push([q[0] - 5, q[1] - 5, q[0] + 5, q[1] + 5]);
       });
+      const cab = cfg.P ? cableHole(pc, cfg.P) : null;
+      if (cab && cab.ok){   // έξοδος καλωδίου στο πραγματικό της μέγεθος (έλλειψη), ώστε να ανοιχτεί η τρύπα στο σίδερο
+        const eq = ellipse(cab.x, cab.y, cab.r, cab.ry).map(T);
+        out.push('0 0.55 0.2 RG 0.5 w [] 0 d'); out.push(path(eq, true));
+        const q = T([cab.x, cab.y]);
+        out.push(path([[q[0] - 3, q[1]], [q[0] + 3, q[1]]])); out.push(path([[q[0], q[1] - 3], [q[0], q[1] + 3]]));
+        out.push('0 0.45 0.15 rg'); text(q[0] + cab.r + 2, q[1] - 2, 4.5, 'KALODIO ' + cabTxt(cfg.P) + (cab.manual ? ' (xeirokinita)' : ''), 'F1');
+        grow(eq);
+        boxes.push([Math.min(...eq.map(a => a[0])) - 1, Math.min(...eq.map(a => a[1])) - 1, Math.max(...eq.map(a => a[0])) + 30, Math.max(...eq.map(a => a[1])) + 1]);
+      }
       const lab = T([uLab, L.h * 0.5]);
       out.push('0 g'); text(lab[0] - 4, lab[1] - 2, 6, id + ((pc.mounts || []).length && !pc.custom ? ' AUTO' : ''), 'F1');
       const bp = T([uLab, 0]);
@@ -2797,7 +2843,7 @@ async function signLines(msg){
   const P = state.P;
   if (!P){ msg.textContent = 'Δεν υπάρχει ακόμα project.'; return null; }
   const nv = id => parseFloat($(id).value);
-  const cfg = {W:nv('sgW'), H:nv('sgH'), rise:nv('sgRise'), floor:nv('sgFloor') || 0, mb:nv('sgM') || 0, gap:nv('sgGap') || 0, mr:(P.mountMode === 'ball' ? P.wallScrewD : P.holeD) / 2};
+  const cfg = {W:nv('sgW'), H:nv('sgH'), rise:nv('sgRise'), floor:nv('sgFloor') || 0, mb:nv('sgM') || 0, gap:nv('sgGap') || 0, mr:(P.mountMode === 'ball' ? P.wallScrewD : P.holeD) / 2, P};
   const dv = id => { const v = parseFloat($(id).value); return v > 0 ? v : 0; };
   const specs = [{t:$('sg1').value.trim(), h:nv('sgH1'), d:dv('sgD1')}, {t:$('sg2').value.trim(), h:nv('sgH2'), d:dv('sgD2')}].filter(x => x.t && x.h > 0);
   const dBad = specs.map(x => x.d || P.depth).concat($('lgOn') && $('lgOn').checked && state.logoFile ? [dv('lgD') || P.depth] : []).find(d => d - P.bt - P.ct * csOf(P) < 2);
@@ -2935,17 +2981,14 @@ function kitParts(P){
   if (P.mountMode === 'ball'){
     const G = ballG(P, P.faceStyle === 'shell');
     if (G.ok){
-      const k = BALL, bp = ballProfile(G), sp = sockProfile(G), pp = pinProfile(G, P), hsl = Math.max(k.floorT + 1.0, G.Hs - G.slotH);
-      const cup = clipPoly(sp, -1, hsl), fing = clipPoly(sp, hsl - 0.5, 1e9), ha = (k.slotW / 2) / ((G.Ri + G.Ro) / 2);
+      const bp = ballProfile(G), pp = pinProfile(G, P);
       const hp = pinHeadPts(P), Rh = Math.max(...hp.map(q => Math.abs(q[1])));
       out.mpales = {label:'μπάλες', w:2 * G.Rd, h:2 * G.Rd, make:(x, y) => [{rev:{prof:bp, n:56, a0:0, a1:2 * Math.PI}, m:T(x, y, 0)}]};
-      out.ypodoxes = {label:'υποδοχές', w:2 * G.Ro, h:2 * G.Ro, make:(x, y) => {
-        const m = T(x, y, 0), r = [{rev:{prof:cup, n:48, a0:0, a1:2 * Math.PI}, m}];
-        for (let q = 0; q < 4; q++){ const c = Math.PI / 4 + q * Math.PI / 2; r.push({rev:{prof:fing, n:18, a0:c + ha, a1:c + Math.PI / 2 - ha}, m}); }
-        return r; }};
-      out.kavilies = {label:'καβίλιες', w:G.pinL + PINHEAD.t, h:2 * Rh, make:(x, y) => {
-        const mp = new THREE.Matrix4().makeBasis(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, -1, 0), new THREE.Vector3(1, 0, 0));
-        mp.setPosition(x - (G.pinL + PINHEAD.t) / 2, y, P.pinD / 2);
+      out.ypodoxes = {label:'υποδοχές', w:sockW(G, P), h:2 * G.Ro, make:(x, y) => sockParts(G, P, P.sockLay ? sockLayM(G, x, y, P.sockTilt) : T(x, y, 0))};
+      if (P.ringOn){ const d = ringDims(G, P); out.kolara = {label:'κολάρα κλειδώματος', w:2 * d.ro, h:2 * d.ro, make:(x, y) => [{rev:{prof:ringProfile(G, P), n:72, a0:0, a1:2 * Math.PI}, m:T(x, y, 0)}]}; }
+      out.kavilies = {label:'καβίλιες', w:2 * Math.max(...hp.map(q => Math.abs(q[0]))), h:2 * Rh, make:(x, y) => {
+        const mp = new THREE.Matrix4().makeBasis(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, -1, 0), new THREE.Vector3(0, 0, -1));
+        mp.setPosition(x, y, G.pinL + PINHEAD.t);
         return [{rev:{prof:pp, n:40, a0:0, a1:2 * Math.PI}, m:mp}, {pts:pinHeadPts(P), w:PINHEAD.t, m:mp.clone().multiply(T(0, 0, G.pinL + PINHEAD.t / 2))}];
       }};
     }
@@ -2957,9 +3000,9 @@ function kitParts(P){
   return out;
 }
 function kitCount(lines, P){
-  const c = {mpales:0, ypodoxes:0, kavilies:0, stirixeis_led:0, stirixeis_led_kolla:0};
+  const c = {mpales:0, ypodoxes:0, kavilies:0, kolara:0, stirixeis_led:0, stirixeis_led_kolla:0};
   lines.forEach(L => L.pieces.forEach(pc => {
-    if (P.mountMode === 'ball'){ const n = (pc.mounts || []).length; c.mpales += n; c.ypodoxes += n; c.kavilies += n; }
+    if (P.mountMode === 'ball'){ const n = (pc.mounts || []).length; c.mpales += n; c.ypodoxes += n; c.kavilies += n; if (P.ringOn) c.kolara += n; }
     if (P.ledOn) (pc.led || []).forEach(l => { if (P.faceStyle === 'shell' && !l.g) c.stirixeis_led++; else c.stirixeis_led_kolla++; });
   }));
   return c;
@@ -2974,7 +3017,7 @@ async function exportKit(){
     if (!r){ btn.disabled = false; return; }
     const P = state.P, spare = Math.max(0, Math.round(parseFloat($('kitSpare').value) || 0));
     const parts = kitParts(P), cnt = kitCount(r.lines, P), files = [], enc = new TextEncoder(), rows = [];
-    const order = ['mpales', 'ypodoxes', 'kavilies', 'stirixeis_led', 'stirixeis_led_kolla'];
+    const order = ['mpales', 'ypodoxes', 'kolara', 'kavilies', 'stirixeis_led', 'stirixeis_led_kolla'];
     for (const key of order){
       const need = cnt[key], part = parts[key];
       if (!need || !part) continue;
@@ -2998,6 +3041,25 @@ async function exportKit(){
     msg.textContent = 'Έτοιμο το ZIP στηριγμάτων. ' + rows.map(x => x.trim()).join(' | ') + '.';
   } catch (e) {
     msg.textContent = e && e.code === 'declined' ? 'Η λήψη ακυρώθηκε. Πάτα ξανά το κουμπί όταν θέλεις.' : 'Δεν έγινε η λήψη: ' + ((e && e.message) || 'σφάλμα');
+  }
+  btn.disabled = false;
+}
+/* Δοκιμαστικό στήριγμα: ένα STL με 1 μπάλα, 1 υποδοχή και 1 καβίλια, με τις τωρινές ρυθμίσεις (δεν χρειάζεται πινακίδα ή γράμματα) */
+async function exportBallTest(){
+  const msg = $('ballTestMsg'), btn = $('ballTest');
+  if (!state.downloads){ msg.textContent = 'Η λήψη δεν είναι διαθέσιμη σε αυτή την προβολή.'; return; }
+  btn.disabled = true;
+  try {
+    const P = state.P, G = P && P.mountMode === 'ball' ? ballG(P, P.faceStyle === 'shell') : null;
+    if (!G || !G.ok){ msg.textContent = 'Οι ρυθμίσεις της μπάλας δεν είναι έγκυρες (δες το μήνυμα παραπάνω).'; btn.disabled = false; return; }
+    const parts = kitParts(P), solids = [], what = $('ballTestWhat').value; let x = 0;
+    (what === 'all' ? ['mpales', 'ypodoxes', 'kolara', 'kavilies'] : [what]).forEach(key => { const p = parts[key]; if (!p){ return; } p.make(x + p.w / 2, p.h / 2).forEach(q => solids.push(q)); x += p.w + 5; });
+    if (!solids.length){ msg.textContent = 'Το κολάρο είναι κλειστό στις ρυθμίσεις (τσέκαρε «Κολάρο κλειδώματος»).'; btn.disabled = false; return; }
+    const data = finishPart(trisOf(solids), false, 0);
+    await state.downloads.save({filename:'dokimi-' + (what === 'all' ? 'stirigma' : what) + '.stl', data: new Blob([data], {type:'model/stl'})});
+    msg.textContent = 'Έτοιμο το αρχείο δοκιμής: ' + (what === 'all' ? 'μπάλα, υποδοχή' + (P.ringOn ? ', κολάρο' : '') + ' και καβίλια δίπλα δίπλα' : what === 'mpales' ? 'μόνο η μπάλα' : what === 'ypodoxes' ? 'μόνο η υποδοχή' : what === 'kolara' ? 'μόνο το κολάρο' : 'μόνο η καβίλια') + (what === 'all' || what === 'ypodoxes' ? ' (υποδοχή με ' + P.slotN + ' δάχτυλα' + (P.sockLay ? ', γερμένη ' + P.sockTilt + '°' : ', όρθια') + ')' : '') + '.';
+  } catch (e) {
+    msg.textContent = e && e.code === 'declined' ? 'Η λήψη ακυρώθηκε.' : 'Δεν έγινε η λήψη: ' + ((e && e.message) || 'σφάλμα');
   }
   btn.disabled = false;
 }
@@ -3080,6 +3142,7 @@ async function exportZip(only, fmt, ctx){
       files.push({name: n + '_mpales.stl', data: finishPart(trisOf(S.ballFile), false, 0)});
       files.push({name: n + '_ypodoxes.stl', data: finishPart(trisOf(S.sockFile), false, 0)});
       if (S.pinFile && S.pinFile.length) files.push({name: n + '_kavilies.stl', data: finishPart(trisOf(S.pinFile), false, 0)});
+      if (P.ringOn && pc.mounts.length){ const Gr = ballG(P, P.faceStyle === 'shell'); if (Gr.ok){ const d = ringDims(Gr, P), rs = []; pc.mounts.forEach((mt, j) => rs.push({rev:{prof:ringProfile(Gr, P), n:72, a0:0, a1:2 * Math.PI}, m:new THREE.Matrix4().makeTranslation(j * (2 * d.ro + 3), 0, 0)})); files.push({name: n + '_kolara.stl', data: finishPart(trisOf(rs), false, 0)}); } }
     }
     if (!ctx && P.faceStyle !== 'shell' && S.ledFileGlue && S.ledFileGlue.length) files.push({name: n + '_stirixeis_led_kolla.stl', data: finishPart(trisOf(S.ledFileGlue), false, 0)});
     if (P.faceStyle === 'shell'){
@@ -3149,6 +3212,7 @@ async function exportZip(only, fmt, ctx){
     anyMounts && P.mountMode === 'spacer' && P.faceStyle !== 'tray' && P.spacerSep ? 'Στερέωση: οι αποστάτες (_apostates) είναι ξεχωριστά σωληνάκια ' + (P.faceStyle === 'shell' ? P.spacerLen + P.recess : P.spacerLen) + ' mm με τρύπα ' + P.holeD + ' mm και τυπώνονται όρθια. Τους βάζεις ανάμεσα στον τοίχο και την πλάκα, στις τρύπες, και τους σφίγγει η βίδα. Η πλάκα τυπώνεται με την πίσω όψη στο τραπέζι.' : anyMounts && P.mountMode === 'spacer' && P.faceStyle !== 'tray' ? 'Στερέωση: η βάση έχει σωληνάκια-αποστάτες ' + P.spacerLen + ' mm με τρύπα ' + P.holeD + ' mm. Το αρχείο της βάσης είναι γυρισμένο ώστε οι αποστάτες να τυπώνονται προς τα πάνω.' : '',
     anyMounts && P.mountMode === 'holes' ? 'Στερέωση: η βάση έχει τρύπες ' + P.holeD + ' mm για βίδωμα απευθείας στον τοίχο.' : '',
     anyMounts && P.mountMode === 'ball' ? 'Μπάλα + υποδοχή: οι μπάλες (_mpales) τυπώνονται ξεχωριστά και κολλιούνται στην πίσω όψη της πλάκας με καβίλια (_kavilies). Η καβίλια είναι ένας μικρός κύλινδρος ' + P.pinD + ' mm, μήκους ' + ballG(P, P.faceStyle === 'shell').pinL.toFixed(1) + ' mm. Μπαίνει από μέσα, από την ίσια τρύπα της πλάκας (' + (P.pinD + P.pinTol).toFixed(2) + ' mm, χωρίς κώνο), και πάει στην τρύπα του κέντρου της μπάλας. Η κεφαλή της έχει δύο αυτιά που ακουμπούν στην πλάκα και δεν την αφήνουν να πάει παραπάνω ή να τραβηχτεί προς τα πίσω. Βάλε λίγη κόλλα και πίεσέ την μέχρι να κάτσουν τα αυτιά πάνω στην πλάκα. Οι καβίλιες τυπώνονται ξαπλωμένες στο πλάι, ώστε οι στρώσεις να τρέχουν κατά μήκος τους και να αντέχουν στο κόψιμο. Η μύτη της μπάλας σημαδεύει το κέντρο στον τοίχο. Εκεί βιδώνεις τις υποδοχές (_ypodoxes) και η μπάλα κουμπώνει μέσα τους. Τύπωσε πρώτα μία μπάλα, μία υποδοχή και μία καβίλια για δοκιμή. Αν η καβίλια μπαίνει πολύ χαλαρά, μείωσε την ανοχή· αν δεν μπαίνει, αύξησέ την.' : '',
+    anyMounts && P.mountMode === 'ball' ? 'Υποδοχές: ' + P.slotN + ' δάχτυλα' + (P.reliefD > 0 ? ' με στρογγυλό τρυπάκι ' + P.reliefD + ' mm στη βάση κάθε κοψίματος' : '') + '. ' + (P.sockLay ? 'Στο αρχείο οι υποδοχές είναι γερμένες κατά ' + P.sockTilt + '° από το τραπέζι (κλειστό άκρο κάτω), ώστε οι στρώσεις να μη λυγίζουν κάθετα στα δάχτυλα. Δοκίμασε χωρίς support, με brim 3-5 mm στον slicer, και στεγνό υλικό (PETG ή στεγνωμένο ASA) με 4+ περιμετρικά και 100% γέμισμα.' + (P.ringOn ? ' Κολάρο κλειδώματος (_kolara): ' + P.ringLen + ' mm μήκος, ' + P.ringWall + ' mm τοίχωμα. Τυπώνεται όρθιο. Το κουμπώνεις την μπάλα και μετά σπρώχνεις το κολάρο πάνω στα δάχτυλα της υποδοχής ώστε να μη μπορούν να ανοίξουν.' : '') : 'Στο αρχείο οι υποδοχές είναι όρθιες. Τα δάχτυλα λυγίζουν κάθετα στις στρώσεις, οπότε είναι πιο εύθραυστα· προτίμησε τη γερμένη τύπωση.') : '',
     P.ledOn && P.faceStyle !== 'shell' && model.pieces.some(p => p.led.length) ? 'Στηρίξεις LED (_stirixeis_led_kolla): μικρά κανάλια για ταινία ' + P.ledW + ' mm, ύψος ταινίας ' + P.ledH + ' mm. Δεν έχουν πόδια ούτε τρύπες στην πλάκα: τις κολλάς πάνω στην πλάκα όπου θες. Είναι τυπωμένες ξαπλωμένες στο πλάι.' : '',
     P.cableMode === 'cut' ? 'Τρύπα καλωδίου ' + cabTxt(P) + ' mm: ανοιγμένη στην πλάκα, κάτω στο γράμμα.' : P.cableMode === 'mark' ? 'Τρύπα καλωδίου ' + cabTxt(P) + ' mm: φαίνεται μόνο ως ένδειξη· άνοιξέ την με τρυπάνι στην πλάκα.' : '',
     P.ledOn && P.faceStyle === 'shell' && model.pieces.some(p => p.led.length) ? 'Στηρίξεις LED (_stirixeis_led): μικρά κανάλια για ταινία ' + P.ledW + ' mm, ύψος ταινίας ' + P.ledH + ' mm. Κάθε στήριξη έχει δύο ελαστικά πόδια που περνούν από την υποδοχή της πλάκας και κουμπώνουν πίσω της. Η ταινία πατιέται μέσα από πάνω και την κρατούν τα δύο χείλη. Είναι τυπωμένες ξαπλωμένες στο πλάι, για να είναι πιο γερά τα πόδια. Οι στηρίξεις «κόλλα» (_stirixeis_led_kolla) δεν έχουν πόδια, δεν ανοίγουν τρύπες στην πλάκα και κολλιούνται πάνω της. Τύπωσε πρώτα μία δοκιμαστικά και ρύθμισε αν χρειαστεί.' : '',
@@ -3729,7 +3793,7 @@ $('edSvg').addEventListener('pointercancel', endDrag);
 
 /* ---------- autosave (per browser) ---------- */
 const SAVE_KEY = 'grammata3d-v1';
-const SAVE_IDS = ['kitSpare','cableMode','cableD','tlOn','tdOn','tnOn','tlD','recess','sLW','sLT','dripOn','dripH','drainMode','spacerSep','ballD','pilotD','pinD','pinTol','pinIn','discH','discD','wallScrewD','ballWall','ballGrip','slotH','clipW','coneOn','coneD','ledOn','ledMount','ledW','ledH','ledGap','ledL','ledT','roofOn','roofAngle','roofH','tilt','tiltDir','weight','wpct','txt','font','spacing','height','depth','bt','wt','ct','tol','lipOn','lipH','lipT','bedW','bedH','svgWhite','faceStyle','brow','plexiT','ledgeW','ledgeT','ledgeSlope','cBase','cWalls','cCap','cPlexi','cLed','cClip','cMark','cBoard','cWallBg','sg1','sg2','sgH1','sgH2','sgD1','sgD2','lgD','sgW','sgH','sgRise','sgFloor','sgM','sgGap','lgOn','lgNoBold','sgPaper','lgH','lgX','lgOff','lgFollow','smooth','skT','engageH','clipsOn','clipN','mountMode','mountN','holeD','spacerLen','spacerOD','flipCap','explode'];
+const SAVE_IDS = ['kitSpare','cableMode','cableD','tlOn','tdOn','tnOn','tlD','recess','sLW','sLT','dripOn','dripH','drainMode','spacerSep','ballD','pilotD','pinD','pinTol','pinIn','discH','discD','wallScrewD','ballWall','ballGrip','slotH','slotN','reliefD','sockLay','sockTilt','ringOn','ringLen','ringWall','ringTol','clipW','coneOn','coneD','ledOn','ledMount','ledW','ledH','ledGap','ledL','ledT','roofOn','roofAngle','roofH','tilt','tiltDir','weight','wpct','txt','font','spacing','height','depth','bt','wt','ct','tol','lipOn','lipH','lipT','bedW','bedH','svgWhite','faceStyle','brow','plexiT','ledgeW','ledgeT','ledgeSlope','cBase','cWalls','cCap','cPlexi','cLed','cClip','cMark','cBoard','cWallBg','sg1','sg2','sgH1','sgH2','sgD1','sgD2','lgD','sgW','sgH','sgRise','sgFloor','sgM','sgGap','lgOn','lgNoBold','sgPaper','lgH','lgX','lgOff','lgFollow','smooth','skT','engageH','clipsOn','clipN','mountMode','mountN','holeD','spacerLen','spacerOD','flipCap','explode'];
 let saveTimer = 0;
 function snapshot(){
   const d = {v:1, mode:state.mode, manual:state.manual, charSets:state.charSets, f:{}};
@@ -3847,7 +3911,7 @@ function setMode(m){
 }
 $('tabText').onclick = () => setMode('text');
 $('tabSvg').onclick = () => setMode('svg');
-['cableMode','cableD','tlOn','tdOn','tnOn','tlD','recess','sLW','sLT','dripOn','dripH','drainMode','spacerSep','ballD','pilotD','pinD','pinTol','pinIn','discH','discD','wallScrewD','ballWall','ballGrip','slotH','clipW','coneOn','coneD','ledOn','ledMount','ledW','ledH','ledGap','ledL','ledT','roofOn','roofAngle','roofH','tilt','tiltDir','weight','wpct','txt','font','spacing','height','depth','bt','wt','ct','tol','lipOn','lipH','lipT','bedW','bedH','svgWhite','faceStyle','brow','plexiT','ledgeW','ledgeT','ledgeSlope','smooth','skT','engageH','clipsOn','clipN','mountMode','mountN','holeD','spacerLen','spacerOD'].forEach(id => {
+['cableMode','cableD','tlOn','tdOn','tnOn','tlD','recess','sLW','sLT','dripOn','dripH','drainMode','spacerSep','ballD','pilotD','pinD','pinTol','pinIn','discH','discD','wallScrewD','ballWall','ballGrip','slotH','slotN','reliefD','sockLay','sockTilt','ringOn','ringLen','ringWall','ringTol','clipW','coneOn','coneD','ledOn','ledMount','ledW','ledH','ledGap','ledL','ledT','roofOn','roofAngle','roofH','tilt','tiltDir','weight','wpct','txt','font','spacing','height','depth','bt','wt','ct','tol','lipOn','lipH','lipT','bedW','bedH','svgWhite','faceStyle','brow','plexiT','ledgeW','ledgeT','ledgeSlope','smooth','skT','engageH','clipsOn','clipN','mountMode','mountN','holeD','spacerLen','spacerOD'].forEach(id => {
   $(id).addEventListener('input', () => { if (id === 'txt' || id === 'font' || id === 'height' || id === 'wpct') state.refit = true; if (id === 'txt' || id === 'font' || id === 'height') state.manual = {}; schedule(); });
   $(id).addEventListener('change', schedule);
 });
@@ -3889,6 +3953,7 @@ $('sgEdLg').addEventListener('click', lgEdit);
 $('sgAll').addEventListener('click', exportSign);
 $('sgDxf').addEventListener('click', exportDxfAll);
 $('sgKit').addEventListener('click', exportKit);
+$('ballTest').addEventListener('click', exportBallTest);
 lgRestore();
 $('sgEd1').addEventListener('click', () => sgEdit(1));
 $('sgEd2').addEventListener('click', () => sgEdit(2));
@@ -3967,7 +4032,15 @@ function uiCardsSync(){
 }
 const UI_TIPS = {
   ballGrip: 'Πόσο στενεύει το άνοιγμα της υποδοχής σε σχέση με τη μπάλα. Μεγαλύτερο = κρατά πιο σφιχτά, αλλά μπαίνει δύσκολα και τα δάχτυλα κουράζονται. Μικρότερο = μπαίνει εύκολα, αλλά μπορεί να βγαίνει μόνο του.',
-  slotH: 'Πόσο ψηλά κατεβαίνουν οι 4 σχισμές της υποδοχής. Πιο κοντές = πιο σκληρά δάχτυλα και πιο σφιχτό κούμπωμα. Δεν μπορεί να γίνει μικρότερο από το χείλος που πατά πάνω στη μπάλα.',
+  slotH: 'Πόσο ψηλά κατεβαίνουν οι σχισμές της υποδοχής. Πιο κοντές = πιο σκληρά δάχτυλα και πιο σφιχτό κούμπωμα. Δεν μπορεί να γίνει μικρότερο από το χείλος που πατά πάνω στη μπάλα.',
+  slotN: 'Πόσα δάχτυλα έχει η υποδοχή. Περισσότερα = πιο στενά και πιο επίπεδα δάχτυλα, που ζορίζονται λιγότερο στη ρίζα, αλλά κρατά η καθεμία λιγότερο. Η μπάλα κουμπώνει σε οποιαδήποτε γωνία.',
+  reliefD: 'Στρογγυλή τρύπα στη βάση κάθε κοψίματος, ώστε να μην ξεκινά ρωγμή από οξεία γωνία. 0 = χωρίς.',
+  sockLay: 'Οι υποδοχές στο αρχείο εκτύπωσης είναι γερμένες, με το κλειστό άκρο κάτω: όσο πιο κοντά στο ξαπλωμένο, τόσο πιο γερά τα δάχτυλα. Κοντά στις 45° συνήθως δεν χρειάζεται support. Βάλε brim 3-5 mm στον slicer.',
+  ringOn: 'Δαχτυλίδι που περνάει απ’ έξω από την υποδοχή. Πρώτα κουμπώνεις την μπάλα, μετά σπρώχνεις το κολάρο στα δάχτυλα και τα κλειδώνει. Τυπώνεται όρθιο.',
+  ringLen: 'Μήκος του κολάρου κατά τον άξονα της υποδοχής: 5 έως 8 mm. Πρέπει να καλύπτει τη ζώνη με τα χείλη των δαχτύλων.',
+  ringWall: 'Πάχος τοιχώματος του κολάρου (1,2 mm = 3 περιμετρικά με ακροφύσιο 0,4).',
+  ringTol: 'Χαραμάδα ανάμεσα στο εσωτερικό του κολάρου και το εξωτερικό της υποδοχής. Μικρότερη = πιο σφιχτό κύλισμα.',
+  sockTilt: 'Η γωνία του άξονα της υποδοχής από το τραπέζι. 0° = ξαπλωμένη, 90° = όρθια. Το 45° είναι καλός συμβιβασμός: δεν θέλει support και οι στρώσεις είναι αρκετά κατά μήκος των δαχτύλων.',
   ballWall: 'Το πάχος του τοιχώματος της υποδοχής. Πιο λεπτό = πιο μαλακό και πιο εύκολο κούμπωμα. Πιο χοντρό = πιο σκληρό.',
   pinTol: 'Το κενό γύρω από την καβίλια στις τρύπες της μπάλας και της πλάκας. 0 = πολύ σφιχτό, μπορεί να μην μπαίνει. Δοκίμασε πρώτα ένα δείγμα στο υλικό που θα χρησιμοποιήσεις.',
   clipN: 'Πόσα clips μπαίνουν σε κάθε γράμμα. Περισσότερα = πιο σταθερό κλείσιμο της βάσης στα τοιχώματα.',
@@ -4288,6 +4361,8 @@ rebuild();
   PAIRS.push(["Κούμπωμα", "Snap-in"], ["Η στήριξη κουμπώνει σε υποδοχή στην πλάκα.", "The mount snaps into a slot in the plate."], ["Κόλλα", "Glue"], ["Κολλιέται πάνω στην πλάκα, χωρίς τρύπες.", "Glued onto the plate, with no holes."], ["Χείλος καπακιού", "Cap lip"], ["Τομή γράμματος από το πλάι. Το ύψος γράμματος είναι το μέγεθός του πάνω στον τοίχο.", "Cross-section of a letter from the side. The letter height is its size on the wall."], ["Λεπτό", "Thin"], ["Κανονικό", "Normal"], ["Το bold φουσκώνει το περίγραμμα του γράμματος. Το ύψος μένει ίδιο.", "Bold thickens the outline of the letter. The height stays the same."], ["Επίπεδη", "Flat"], ["Στέγη", "Roof"], ["Τρεις τρόποι για την πάνω επιφάνεια. Η στέγη και η κλίση ρυθμίζονται παρακάτω.", "Three ways to shape the top surface. The roof and the tilt are set below."], ["Πινακίδα", "Sign"], ["Τα γράμματα και το λογότυπο πάνω στην αψίδα, PDF για τον τοίχο και λήψεις για όλη την πινακίδα.", "The letters and the logo on the arch, a PDF for the wall and downloads for the whole sign."], ["Μέγεθος και γραμμές", "Size and lines"], ["Προεπισκόπηση και λήψεις", "Preview and downloads"], ["Αψίδα, λογότυπο, PDF", "Arch, logo, PDF"], ["Αν η εικόνα έχει λευκό φόντο, το πρόγραμμα το αγνοεί ώστε να μη γίνει ορθογώνιο κομμάτι. Κλείστο μόνο αν το λευκό είναι μέρος του σχεδίου.", "If the image has a white background, the program ignores it so it does not become a rectangular piece. Turn it off only if the white is part of the design."], ["Η απόσταση ανάμεσα στα γράμματα του κειμένου.", "The distance between the letters of the text."], ["Φουσκώνει το περίγραμμα του γράμματος (ή το λεπταίνει, με αρνητική τιμή). Βοηθά όταν η γραμματοσειρά είναι πολύ λεπτή για εκτύπωση. Σε εικόνα με κομμάτια κοντά μεταξύ τους μπορεί να τα ενώσει.", "Thickens the outline of the letter (or thins it, with a negative value). It helps when the font is too thin to print. In an image with pieces close together it may join them."], ["Το πλάτος των γραμμάτων: 100% είναι το κανονικό. Πάνω από 100 τα πλαταίνει, κάτω από 100 τα στενεύει.", "The width of the letters: 100% is normal. Above 100 it widens them, below 100 it narrows them."], ["Πόσο ομαλές βγαίνουν οι καμπύλες. Αν βλέπεις γωνίες στις στροφές, ανέβασέ το.", "How smooth the curves come out. If you see corners in the bends, raise it."], ["Το συνολικό βάθος του γράμματος από την πλάκα ως το καπάκι. Πρέπει να χωράει την ταινία LED και τη στήριξή της.", "The total depth of the letter from the plate to the cap. It must fit the LED strip and its mount."], ["Το πάχος της πλάκας στο πίσω μέρος. Πιο χοντρή = πιο στερεή, αλλά περισσότερο υλικό και χρόνος.", "The thickness of the plate at the back. Thicker = sturdier, but more material and time."], ["Το πάχος των τοιχωμάτων γύρω από το γράμμα. Πιο χοντρά = πιο στερεά, αλλά περισσότερο υλικό.", "The thickness of the walls around the letter. Thicker = sturdier, but more material."], ["Το πάχος του καπακιού (πρόσοψης). Αν το καπάκι είναι από ημιδιάφανο υλικό, πιο λεπτό = περισσότερο φως.", "The thickness of the cap (face). If the cap is made of a translucent material, thinner = more light."], ["Το κενό ανάμεσα σε κομμάτια που εφαρμόζουν μεταξύ τους (π.χ. καπάκι και τοιχώματα). Αν εφαρμόζουν πολύ χαλαρά ή δεν μπαίνουν, άλλαξέ το λίγο. Εξαρτάται από τον εκτυπωτή και το υλικό.", "The gap between pieces that fit together (e.g. cap and walls). If they fit too loosely or do not go in, change it a little. It depends on the printer and the material."], ["Το χείλος είναι μια λεπτή προεξοχή του καπακιού που μπαίνει μέσα στα τοιχώματα, ώστε το καπάκι να κάθεται στη θέση του και να μη γλιστρά.", "The lip is a thin projection of the cap that goes inside the walls, so the cap stays in place and does not slide."], ["Πόσο βαθιά μπαίνει το χείλος μέσα στα τοιχώματα.", "How deep the lip goes inside the walls."], ["Το πάχος του χείλους. Πιο λεπτό = πιο εύκολο να μπει, πιο χοντρό = πιο στέρεο.", "The thickness of the lip. Thinner = easier to fit, thicker = sturdier."], ["Η πάνω επιφάνεια ανεβαίνει σαν στέγη στη μέση κάθε γραμμής, ώστε το νερό να τρέχει στα πλάγια.", "The top surface rises like a roof in the middle of each line, so the water runs off the sides."], ["Πόσο απότομη είναι η στέγη. Μεγαλύτερη γωνία = πιο απότομη.", "How steep the roof is. A larger angle = steeper."], ["Το μέγιστο ύψος που μπορεί να φτάσει ο κορφιάς της στέγης.", "The maximum height the ridge of the roof can reach."], ["Γέρνει την πάνω επιφάνεια προς μία κατεύθυνση, π.χ. για να φεύγει το νερό.", "Tilts the top surface in one direction, e.g. so the water drains away."], ["Προς ποια πλευρά είναι το ψηλότερο σημείο της κλίσης.", "Which side the highest point of the tilt is on."], ["Το πλάτος της ταινίας LED που έχεις αγοράσει (συνήθως 8 ή 10 mm). Η στήριξη φτιάχνεται για αυτό το πλάτος.", "The width of the LED strip you bought (usually 8 or 10 mm). The mount is made for this width."], ["Το πάχος της ταινίας LED μαζί με την κόλλα της, για να χωράει στο κανάλι της στήριξης.", "The thickness of the LED strip including its adhesive, so it fits in the channel of the mount."], ["Η απόσταση ανάμεσα στις στηρίξεις κατά μήκος της ταινίας. Μικρότερη = περισσότερες στηρίξεις και πιο σταθερή ταινία.", "The distance between the mounts along the strip. Smaller = more mounts and a steadier strip."], ["Το μήκος κάθε στήριξης κατά μήκος της ταινίας. Πιο κοντό = λιγότερο υλικό και χωράει σε στενά γράμματα, αλλά κρατά λιγότερο.", "The length of each mount along the strip. Shorter = less material and fits narrow letters, but holds less."], ["Το πλάτος του τραπεζιού του εκτυπωτή σου, για να ελέγχεται αν χωράνε τα κομμάτια.", "The width of your printer bed, to check whether the pieces fit."], ["Το βάθος του τραπεζιού του εκτυπωτή σου, για να ελέγχεται αν χωράνε τα κομμάτια.", "The depth of your printer bed, to check whether the pieces fit."], ["Πόσο ψηλότερα είναι το κέντρο της αψίδας από τις δύο γωνίες της πινακίδας.", "How much higher the center of the arch is than the two corners of the sign."], ["Επιπλέον κομμάτια στηριγμάτων για σπασίματα και δοκιμές, ανά τύπο.", "Extra mount pieces for breakage and tests, per type."], ["Τι θα τυπώσεις για τα LED", "What you will print for the LEDs"], ["Στηρίξεις LED με κούμπωμα", "Snap-in LED mounts"], ["Τυπώνονται ξεχωριστά και κουμπώνουν σε υποδοχές της πλάκας.", "Printed separately and snap into slots in the plate."], ["Στηρίξεις LED με κόλλα", "Glue-on LED mounts"], ["Τυπώνονται ξεχωριστά και κολλιούνται στην πλάκα.", "Printed separately and glued to the plate."], ["Δεν χωράει καμία με τις τωρινές ρυθμίσεις.", "None fits with the current settings."]);
   PAIRS.push(["Βάθος πάνω γραμμής", "Top line depth"], ["Βάθος κάτω γραμμής", "Bottom line depth"], ["Βάθος λογοτύπου", "Logo depth"], ["όπως στο project", "same as the project"], ["Το πάχος (συνολικό βάθος) των γραμμάτων αυτής της γραμμής. Αν το αφήσεις κενό, παίρνει το βάθος από τις Διαστάσεις.", "The thickness (total depth) of the letters of this line. If you leave it empty, it takes the depth from Dimensions."], ["Το πάχος (συνολικό βάθος) του λογοτύπου. Αν το αφήσεις κενό, παίρνει το βάθος από τις Διαστάσεις.", "The thickness (total depth) of the logo. If you leave it empty, it takes the depth from Dimensions."], [" cm, βάθος ", " cm, depth "], ["Το βάθος ", "The depth "], [" mm είναι πολύ μικρό για τα πάχη που έχεις ορίσει. Αύξησέ το ή μίκρυνε βάση και καπάκι.", " mm is too small for the thicknesses you set. Increase it or make the base and cap thinner."]);
   PAIRS.push(["Πάχος τοιχωμάτων στήριξης", "Mount wall thickness"], ["Το πάχος του πατώματος και των δύο πλαϊνών τοιχωμάτων της στήριξης LED (τα χείλη πάνω από την ταινία μένουν 1 mm). Πιο λεπτό = χαμηλότερη και στενότερη στήριξη. Για ακροφύσιο 0,4 mm το 1,2 βγαίνει συνήθως πιο καθαρό από το 1,0.", "The thickness of the floor and the two side walls of the LED mount (the lips over the strip stay 1 mm). Thinner = a lower and narrower mount. With a 0.4 mm nozzle, 1.2 usually prints cleaner than 1.0."]);
+  PAIRS.push(["Αριθμός κοψιμάτων υποδοχής", "Number of socket slots"], ["Στρογγυλό τρυπάκι στη βάση κάθε κοψίματος (0 = όχι)", "Round relief hole at the base of each slot (0 = none)"], ["Υποδοχές γερμένες στο αρχείο εκτύπωσης (χωρίς support, πιο γερά δάχτυλα)", "Sockets tilted in the print file (no support, stronger fingers)"], ["Κλίση υποδοχής στην εκτύπωση (0 = ξαπλωμένη, 90 = όρθια)", "Socket tilt when printing (0 = flat, 90 = upright)"], ["Κολάρο κλειδώματος (δαχτυλίδι που σφίγγει τα δάχτυλα της υποδοχής)", "Locking collar (ring that clamps the socket fingers)"], ["Μήκος κολάρου (5–8)", "Collar length (5–8)"], ["Πάχος τοιχώματος κολάρου", "Collar wall thickness"], ["Ανοχή κολάρου γύρω από την υποδοχή", "Collar clearance around the socket"], ["Μόνο το κολάρο κλειδώματος", "Locking collar only"]);
+  PAIRS.push(["Λήψη δοκιμής (ένα STL)", "Download test (one STL)"], ["Δοκιμαστική λήψη: τι να κατέβει", "Test download: what to get"], ["Όλα: μπάλα + υποδοχή + καβίλια", "All: ball + socket + dowel pin"], ["Μόνο η μπάλα", "Ball only"], ["Μόνο η υποδοχή", "Socket only"], ["Μόνο η καβίλια", "Dowel pin only"]);
   PAIRS.sort(function(a, b){ return b[0].length - a[0].length; });
   var MAP = new Map(PAIRS);
   function esc(t){ return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
